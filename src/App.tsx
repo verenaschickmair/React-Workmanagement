@@ -1,9 +1,9 @@
-import React from 'react';
+import React from "react";
 
 function App() {
   return (
     <div>
-      Test
+      <p className="bg-blue-500">Test</p>
     </div>
   );
 }
