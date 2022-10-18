@@ -1,9 +1,14 @@
 import React from "react";
+import Button from "./components/button/button";
+import ProjectItem from "./components/project/project-item";
+import TeamMember from "./components/project/team/team-member";
 
 function App() {
   return (
     <div>
-      <p className="bg-blue-500">Test</p>
+      <ProjectItem />
+      <TeamMember />
+      <Button />
     </div>
   );
 }
