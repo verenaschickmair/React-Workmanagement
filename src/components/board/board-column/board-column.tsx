@@ -2,6 +2,7 @@ import { Fragment } from "react";
 import { Menu, Popover, Transition } from "@headlessui/react";
 import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import TaskItem from "../task/task-item";
 
 const user = {
   name: "Chelsea Hagon",
@@ -28,7 +29,12 @@ function classNames(...classes: string[]) {
 export default function Example() {
   return (
     <div className="top-6 space-y-4 bg-gray-100 w-full">
-      <p>Test</p>
+      <ul
+        role="list"
+        className="mt-3 grid grid-cols-1 grid-flow-col gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4"
+      >
+        <TaskItem />
+      </ul>
     </div>
   );
 }
