@@ -1,4 +1,5 @@
 import { CalendarIcon, MapPinIcon, UsersIcon } from "@heroicons/react/20/solid";
+import AddProject from "./add-project/add-project";
 
 const positions = [
   {
@@ -83,6 +84,7 @@ export default function Example() {
           </li>
         ))}
       </ul>
+      <AddProject />
     </div>
   );
 }
