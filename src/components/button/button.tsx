@@ -1,35 +1,28 @@
 import { EnvelopeIcon } from "@heroicons/react/20/solid";
+import classNames from "classnames";
+import React, { ButtonHTMLAttributes, PropsWithChildren } from "react";
 
-export default function Example() {
+
+type ButtonProps = {
+  icon?:React.ReactNode
+  buttonSize?: "small" | "medium" | "large"
+  buttonText: string
+} & ButtonHTMLAttributes<HTMLButtonElement>
+export const CustomButton = ({buttonSize="medium", icon, buttonText,...props}: PropsWithChildren<ButtonProps>) => {
+    const defaultClasses =  "inline-flex items-center rounded-md border border-transparent bg-indigo-600 text-sm font-medium leading-4 text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+    const buttonClassNames = classNames(defaultClasses, {
+      "px-3 py-2": buttonSize === "small",
+      "px-4 py-2": buttonSize === "medium",
+      "px-5 py-3": buttonSize === "large"
+    })
   return (
     <>
-      <button
+      <button {...props}
         type="button"
-        className="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-3 py-2 text-sm font-medium leading-4 text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+        className={buttonClassNames}
       >
-        <EnvelopeIcon className="-ml-0.5 mr-2 h-4 w-4" aria-hidden="true" />
-        Button text
-      </button>
-      <button
-        type="button"
-        className="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-      >
-        <EnvelopeIcon className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
-        Button text
-      </button>
-      <button
-        type="button"
-        className="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-      >
-        <EnvelopeIcon className="-ml-1 mr-3 h-5 w-5" aria-hidden="true" />
-        Button text
-      </button>
-      <button
-        type="button"
-        className="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-      >
-        <EnvelopeIcon className="-ml-1 mr-3 h-5 w-5" aria-hidden="true" />
-        Button text
+        {icon}
+        {buttonText}
       </button>
     </>
   );
