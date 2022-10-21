@@ -15,7 +15,7 @@ export const ProjectItem = () =>  {
           </h1>
        <AddProject />
     <div className="overflow-hidden bg-white shadow sm:rounded-md" style={({ marginTop:'20px', paddingTop: '20px', paddingBottom: '20px', margin:'auto', width: '80%'})}>
-      <ul role="list" className="divide-y divide-gray-200">
+      <ul className="divide-y divide-gray-200">
         {projects.map((project) => (
           <li key={project.id}>
            <ProjectListItem projectData={project}/>

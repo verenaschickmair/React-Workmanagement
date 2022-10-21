@@ -1,40 +1,18 @@
-import { Fragment } from "react";
-import { Menu, Popover, Transition } from "@headlessui/react";
-import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
-import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import TaskItem from "../task/task-item";
 
-const user = {
-  name: "Chelsea Hagon",
-  email: "chelsea.hagon@example.com",
-  imageUrl:
-    "https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+type BoardColumnProps = {
+  name: string;
 };
-const navigation = [
-  { name: "Dashboard", href: "#", current: true },
-  { name: "Calendar", href: "#", current: false },
-  { name: "Teams", href: "#", current: false },
-  { name: "Directory", href: "#", current: false },
-];
-const userNavigation = [
-  { name: "Your Profile", href: "#" },
-  { name: "Settings", href: "#" },
-  { name: "Sign out", href: "#" },
-];
 
-function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(" ");
-}
-
-export default function Example() {
+export const BoardColumn = ({ name }: BoardColumnProps) => {
   return (
-    <div className="top-6 space-y-4 bg-gray-100 w-full">
-      <ul
-        role="list"
-        className="mt-3 grid grid-cols-1 grid-flow-col gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4"
-      >
-        <TaskItem />
-      </ul>
+    <div>
+      <h2 className="text-lg text-center mb-2">{name}</h2>
+      <div className="top-6 h-96 space-y-4 bg-gray-100 w-full">
+        <ul className="grid grid-cols-1 gap-5">
+          <TaskItem />
+        </ul>
+      </div>
     </div>
   );
-}
+};
