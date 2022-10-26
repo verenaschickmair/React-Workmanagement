@@ -21,7 +21,6 @@ export const AddTaskModal = ({ onSuccess }: AddTaskModalProps) => {
     setTaskColor(event.target.value);
   };
 
-
   function isValid(): boolean {
     if (!taskName || taskName.length < 3) {
       alert("Project name empty or too short");
@@ -42,6 +41,7 @@ export const AddTaskModal = ({ onSuccess }: AddTaskModalProps) => {
           title: taskName,
           initials: taskInitials,
           bgColor: taskColor,
+          columnId: 0,
         })
       );
       onSuccess();

@@ -2,41 +2,44 @@ import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
 import { Link } from "react-router-dom";
 import { TaskData } from "../../../interfaces/task-data";
 
-const tasks: TaskData[] = [
-  {
-    id: 1,
-    title: "Graph API",
-    initials: "GA",
-    bgColor: "bg-purple-600",
-  },
-  {
-    id: 2,
-    title: "Component Design",
-    initials: "GA",
-    bgColor: "bg-purple-600",
-  },
-  {
-    id: 3,
-    title: "Templates",
-    initials: "GA",
-    bgColor: "bg-purple-600",
-  },
-  {
-    id: 4,
-    title: "React Components",
-    initials: "GA",
-    bgColor: "bg-purple-600",
-  },
-];
+type TaskItemProps = {
+  task: TaskData;
+};
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Example() {
+function drag(ev: any) {
+  ev.dataTransfer.setData("text", ev.target.id);
+}
+
+function allowDrop(ev: any) {
+  ev.preventDefault();
+}
+
+function drop(ev: any) {
+  ev.preventDefault();
+  let data = ev.dataTransfer.getData("text");
+
+  let _oldDiv = document.getElementById(data)?.parentNode,
+    _oldData = document.getElementById(data),
+    _newDiv = ev.target.parentNode,
+    _newData = ev.target;
+
+  _oldDiv?.appendChild(_newData);
+  _newDiv.appendChild(_oldData);
+}
+
+export default function TaskItem({ task }: TaskItemProps) {
   return (
-    <div className="space-y-2 p-2">
-      {tasks.map((task: TaskData) => (
+    <div
+      className="space-y-2 p-2"
+      id={`div${task.id}`}
+      onDrop={(e) => drop(e)}
+      onDragOver={(e) => allowDrop(e)}
+    >
+      <div id={`drag${task.id}`} draggable="true" onDragStart={(e) => drag(e)}>
         <Link
           to={`${window.location.pathname}/task/${task.id}`}
           className="block hover:bg-gray-50"
@@ -70,7 +73,7 @@ export default function Example() {
             </div>
           </li>
         </Link>
-      ))}
+      </div>
     </div>
   );
 }

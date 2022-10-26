@@ -3,4 +3,5 @@ export interface TaskData {
   title: string;
   initials: string;
   bgColor: string;
+  columnId: number;
 }
