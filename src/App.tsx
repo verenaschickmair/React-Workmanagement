@@ -3,7 +3,7 @@ import React from "react";
 import { RecoilRoot } from "recoil";
 import Board from "./components/board/board";
 import BoardColumn from "./components/board/board-column/board-column";
-import TaskDetail from "./components/board/task/details/task-detail";
+import { TaskDetail } from "./components/board/task/details/task-detail";
 import { CustomButton } from "./components/button/button";
 import { Popup } from "./components/popup/popup";
 import { ProjectItem } from "./components/project/project-item";
