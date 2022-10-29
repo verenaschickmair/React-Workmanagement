@@ -20,6 +20,8 @@ import {
   TagIcon,
   UserCircleIcon as UserCircleIconMini,
 } from "@heroicons/react/20/solid";
+import {TaskData} from "../../../../interfaces/task-data";
+import {getCurrentDate} from "../../../../interfaces/project-data";
 
 const projects = [
   { id: 1, name: "GraphQL API", href: "#" },
@@ -71,9 +73,19 @@ function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
 
-export const TaskDetail = () => {
+type TaskDetailProps = {
+  taskData:TaskData
+  onSuccess:()=>void
+}
+
+
+export const TaskDetail = ({taskData, onSuccess}:TaskDetailProps) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
+  function onButtonCloseClick(){
+    console.log("Ticket closed")
+      onSuccess()
+    }
 
   return (
       <div className="flex min-h-full">
@@ -154,7 +166,7 @@ export const TaskDetail = () => {
                     <div className="md:flex md:items-center md:justify-between md:space-x-4 xl:border-b xl:pb-6">
                       <div>
                         <h1 className="text-2xl font-bold text-gray-900">
-                          ARIA attribute misspelled
+                          {taskData.title}
                         </h1>
                         <p className="mt-2 text-sm text-gray-500">
                           #400 opened by{" "}
@@ -178,15 +190,6 @@ export const TaskDetail = () => {
                           />
                           <span className="text-sm font-medium text-green-700">
                           Open Issue
-                        </span>
-                        </div>
-                        <div className="flex items-center space-x-2">
-                          <ChatBubbleLeftEllipsisIcon
-                              className="h-5 w-5 text-gray-400"
-                              aria-hidden="true"
-                          />
-                          <span className="text-sm font-medium text-gray-900">
-                          4 comments
                         </span>
                         </div>
                         <div className="flex items-center space-x-2">
@@ -216,7 +219,7 @@ export const TaskDetail = () => {
                                   />
                                 </div>
                                 <div className="text-sm font-medium text-gray-900">
-                                  Eduardo Benz
+                                  {taskData.members}
                                 </div>
                               </a>
                             </li>
@@ -267,11 +270,7 @@ export const TaskDetail = () => {
                       <h2 className="sr-only">Description</h2>
                       <div className="prose max-w-none">
                         <p>
-                          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                          Expedita, hic? Commodi cumque similique id tempora
-                          molestiae deserunt at suscipit, dolor voluptatem,
-                          numquam, harum consequatur laboriosam voluptas tempore
-                          aut voluptatum alias?
+                          {taskData.details}
                         </p>
                         <ul role="list">
                           <li>
@@ -312,6 +311,7 @@ export const TaskDetail = () => {
                                   <button
                                       type="button"
                                       className="inline-flex justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2"
+                                      onClick={onButtonCloseClick}
                                   >
                                     <CheckCircleIcon
                                         className="-ml-1 mr-2 h-5 w-5 text-green-500"
@@ -342,21 +342,12 @@ export const TaskDetail = () => {
                   </span>
                   </div>
                   <div className="flex items-center space-x-2">
-                    <ChatBubbleLeftEllipsisIcon
-                        className="h-5 w-5 text-gray-400"
-                        aria-hidden="true"
-                    />
-                    <span className="text-sm font-medium text-gray-900">
-                    4 comments
-                  </span>
-                  </div>
-                  <div className="flex items-center space-x-2">
                     <CalendarIcon
                         className="h-5 w-5 text-gray-400"
                         aria-hidden="true"
                     />
                     <span className="text-sm font-medium text-gray-900">
-                    Created on <time dateTime="2020-12-02">Dec 2, 2020</time>
+                    Created on <time>{taskData.dateOfCreation}</time>
                   </span>
                   </div>
                 </div>

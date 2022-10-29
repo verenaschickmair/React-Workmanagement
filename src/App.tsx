@@ -8,14 +8,31 @@ import { CustomButton } from "./components/button/button";
 import { Popup } from "./components/popup/popup";
 import { ProjectItem } from "./components/project/project-item";
 import { TeamMember } from "./components/project/team/team-member";
+import {TaskItem} from "./components/board/task/task-item";
+import {TaskData} from "./interfaces/task-data";
+import {getCurrentDate} from "./interfaces/project-data";
 
+//just example Data for a TaskItem
+const task: TaskData =
+  {
+    id: 2,
+    title: "Graph API",
+    initials: "GA",
+    href: "#",
+    members: 16,
+    bgColor: "bg-pink-600",
+    dateOfCreation: getCurrentDate("."),
+    details: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita, hic? Commodi cumque similique id tempora molestiae deserunt at suscipit, dolor voluptatem, numquam, harum consequatur laboriosam voluptas tempore aut voluptatum alias?"
+
+  };
 
 function App() {
   return (
-    <RecoilRoot> 
+    <RecoilRoot>
     <div>
       <ProjectItem />
-    
+
+      <TaskItem taskData={task}/>
     </div>
     </RecoilRoot>
   );

@@ -1,8 +1,12 @@
-import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
-import {Fragment} from "react";
+import {EllipsisVerticalIcon, PlusIcon} from "@heroicons/react/20/solid";
+import {Fragment, useState} from "react";
 import {useRecoilState} from "recoil";
 import {projectState} from "../../../global-state/project-atom";
 import {TaskData} from "../../../interfaces/task-data";
+import {CustomButton} from "../../button/button";
+import {Popup} from "../../popup/popup";
+import {AddProjectModal} from "../../project/add-project/add-project-popup";
+import {TaskDetail} from "./details/task-detail";
 
 const projects = [
   {
@@ -44,8 +48,20 @@ type TaskItemProps = {
 }
 
 export const TaskItem = ({taskData}: TaskItemProps) => {
+
+  const [showTaskDetailView, setShowTaskDetail] = useState(false)
+
+  function onButtonClick(){
+    setShowTaskDetail(true)
+  }
+  function onPopupClose(){
+    setShowTaskDetail(false)
+  }
+
+
   return (
       <Fragment>
+        <Popup trigger={showTaskDetailView} onCloseClick={onPopupClose}><TaskDetail taskData={taskData} onSuccess={onPopupClose}/></Popup>
       <div
           className={classNames(
               taskData.bgColor,
@@ -54,7 +70,7 @@ export const TaskItem = ({taskData}: TaskItemProps) => {
       >
         {taskData.initials}
       </div>
-  <div className="flex flex-1 items-center justify-between truncate rounded-r-md border-t border-r border-b border-gray-200 bg-white">
+  <div className="flex flex-1 items-center justify-between truncate rounded-r-md border-t border-r border-b border-gray-200 bg-white hover:bg-gray-200" onClick={onButtonClick}>
     <div className="flex-1 truncate px-4 py-2 text-sm">
       <a
           href={taskData.href}
