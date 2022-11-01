@@ -1,5 +1,5 @@
 import { TaskData } from "../../../interfaces/task-data";
-import TaskItem from "../task/task-item";
+import { TaskItem } from "../task/task-item";
 
 type BoardColumnProps = {
   name: string;
@@ -13,7 +13,7 @@ export const BoardColumn = ({ name, tasks }: BoardColumnProps) => {
       <div className="top-6 h-96 space-y-4 bg-gray-100 w-full">
         <ul className="grid grid-cols-1 gap-5">
           {tasks.map((task) => (
-            <TaskItem task={task} key={task.id} />
+            <TaskItem taskData={task} key={task.id} />
           ))}
         </ul>
       </div>
