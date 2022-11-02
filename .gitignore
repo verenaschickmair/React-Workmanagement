@@ -11,6 +11,9 @@
 # production
 /build
 
+#WIntellij
+.idea/
+
 # misc
 .DS_Store
 .env.local
