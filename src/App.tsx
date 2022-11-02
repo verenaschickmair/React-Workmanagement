@@ -11,7 +11,6 @@ function App() {
         <Routes>
           <Route path="/" element={<ProjectItem />} />
           <Route path="/projects/:id" element={<Board />} />
-          <Route path="projects/:id/task/:id" element={<TaskDetail />} />
         </Routes>
       </div>
     </RecoilRoot>

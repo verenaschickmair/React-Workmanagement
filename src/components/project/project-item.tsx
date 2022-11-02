@@ -14,13 +14,21 @@ const tasks: TaskData[] = [
     initials: "GA",
     bgColor: "bg-purple-600",
     columnId: 0,
+    description: "hallo",
+    members: [
+      { id: 1, name: "Verena" },
+      { id: 2, name: "Philip" },
+      { id: 3, name: "Simon" },
+    ],
   },
   {
     id: 1,
     title: "Component Design",
     initials: "GA",
-    bgColor: "bg-purple-600",
+    bgColor: "bg-green-600",
     columnId: 0,
+    description: "hallo",
+    members: [{ id: 3, name: "Simon" }],
   },
   {
     id: 2,
@@ -28,6 +36,11 @@ const tasks: TaskData[] = [
     initials: "GA",
     bgColor: "bg-purple-600",
     columnId: 0,
+    description: "hallo",
+    members: [
+      { id: 1, name: "Verena" },
+      { id: 3, name: "Simon" },
+    ],
   },
   {
     id: 3,
@@ -35,6 +48,8 @@ const tasks: TaskData[] = [
     initials: "GA",
     bgColor: "bg-purple-600",
     columnId: 0,
+    description: "hallo",
+    members: [{ id: 2, name: "Philip" }],
   },
 ];
 

@@ -20,8 +20,8 @@ import {
   TagIcon,
   UserCircleIcon as UserCircleIconMini,
 } from "@heroicons/react/20/solid";
-import {TaskData} from "../../../../interfaces/task-data";
-import {getCurrentDate} from "../../../../interfaces/project-data";
+import { TaskData } from "../../../../interfaces/task-data";
+import { getCurrentDate } from "../../../../interfaces/project-data";
 
 const projects = [
   { id: 1, name: "GraphQL API", href: "#" },
@@ -29,6 +29,7 @@ const projects = [
   { id: 3, name: "Marketing Site Redesign", href: "#" },
   { id: 4, name: "Customer Portal", href: "#" },
 ];
+
 const activity = [
   {
     id: 1,
@@ -74,350 +75,345 @@ function classNames(...classes: string[]) {
 }
 
 type TaskDetailProps = {
-  taskData:TaskData
-  onSuccess:()=>void
-}
+  taskData: TaskData;
+  onSuccess: () => void;
+};
 
-
-export const TaskDetail = ({taskData, onSuccess}:TaskDetailProps) => {
+export const TaskDetail = ({ taskData, onSuccess }: TaskDetailProps) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  function onButtonCloseClick(){
-    console.log("Ticket closed")
-      onSuccess()
-    }
+  function onButtonCloseClick() {
+    console.log("Ticket closed");
+    onSuccess();
+  }
 
   return (
-      <div className="flex min-h-full">
-        <Transition.Root show={sidebarOpen} as={Fragment}>
-          <Dialog
-              as="div"
-              className="relative z-40 lg:hidden"
-              onClose={setSidebarOpen}
+    <div className="flex min-h-full">
+      <Transition.Root show={sidebarOpen} as={Fragment}>
+        <Dialog
+          as="div"
+          className="relative z-40 lg:hidden"
+          onClose={setSidebarOpen}
+        >
+          <Transition.Child
+            as={Fragment}
+            enter="transition-opacity ease-linear duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="transition-opacity ease-linear duration-300"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
           >
+            <div className="fixed inset-0 bg-gray-600 bg-opacity-75" />
+          </Transition.Child>
+
+          <div className="fixed inset-0 z-40 flex">
             <Transition.Child
-                as={Fragment}
-                enter="transition-opacity ease-linear duration-300"
-                enterFrom="opacity-0"
-                enterTo="opacity-100"
-                leave="transition-opacity ease-linear duration-300"
-                leaveFrom="opacity-100"
-                leaveTo="opacity-0"
+              as={Fragment}
+              enter="transition ease-in-out duration-300 transform"
+              enterFrom="-translate-x-full"
+              enterTo="translate-x-0"
+              leave="transition ease-in-out duration-300 transform"
+              leaveFrom="translate-x-0"
+              leaveTo="-translate-x-full"
             >
-              <div className="fixed inset-0 bg-gray-600 bg-opacity-75" />
-            </Transition.Child>
-
-            <div className="fixed inset-0 z-40 flex">
-              <Transition.Child
+              <Dialog.Panel className="relative flex w-full max-w-xs flex-1 flex-col bg-gray-800 pt-5 pb-4">
+                <Transition.Child
                   as={Fragment}
-                  enter="transition ease-in-out duration-300 transform"
-                  enterFrom="-translate-x-full"
-                  enterTo="translate-x-0"
-                  leave="transition ease-in-out duration-300 transform"
-                  leaveFrom="translate-x-0"
-                  leaveTo="-translate-x-full"
-              >
-                <Dialog.Panel className="relative flex w-full max-w-xs flex-1 flex-col bg-gray-800 pt-5 pb-4">
-                  <Transition.Child
-                      as={Fragment}
-                      enter="ease-in-out duration-300"
-                      enterFrom="opacity-0"
-                      enterTo="opacity-100"
-                      leave="ease-in-out duration-300"
-                      leaveFrom="opacity-100"
-                      leaveTo="opacity-0"
-                  >
-                    <div className="absolute top-0 right-0 -mr-12 pt-2">
-                      <button
-                          type="button"
-                          className="ml-1 flex h-10 w-10 items-center justify-center rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
-                          onClick={() => setSidebarOpen(false)}
-                      >
-                        <span className="sr-only">Close sidebar</span>
-                        <XMarkIcon
-                            className="h-6 w-6 text-white"
-                            aria-hidden="true"
-                        />
-                      </button>
-                    </div>
-                  </Transition.Child>
-                  <div className="flex flex-shrink-0 items-center px-4">
-                    <img
-                        className="h-8 w-auto"
-                        src="https://tailwindui.com/img/logos/mark.svg?color=rose&shade=500"
-                        alt="Your Company"
-                    />
+                  enter="ease-in-out duration-300"
+                  enterFrom="opacity-0"
+                  enterTo="opacity-100"
+                  leave="ease-in-out duration-300"
+                  leaveFrom="opacity-100"
+                  leaveTo="opacity-0"
+                >
+                  <div className="absolute top-0 right-0 -mr-12 pt-2">
+                    <button
+                      type="button"
+                      className="ml-1 flex h-10 w-10 items-center justify-center rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                      onClick={() => setSidebarOpen(false)}
+                    >
+                      <span className="sr-only">Close sidebar</span>
+                      <XMarkIcon
+                        className="h-6 w-6 text-white"
+                        aria-hidden="true"
+                      />
+                    </button>
                   </div>
-                </Dialog.Panel>
-              </Transition.Child>
-              <div className="w-14 flex-shrink-0" aria-hidden="true">
-                {/* Dummy element to force sidebar to shrink to fit close icon */}
-              </div>
+                </Transition.Child>
+                <div className="flex flex-shrink-0 items-center px-4">
+                  <img
+                    className="h-8 w-auto"
+                    src="https://tailwindui.com/img/logos/mark.svg?color=rose&shade=500"
+                    alt="Your Company"
+                  />
+                </div>
+              </Dialog.Panel>
+            </Transition.Child>
+            <div className="w-14 flex-shrink-0" aria-hidden="true">
+              {/* Dummy element to force sidebar to shrink to fit close icon */}
             </div>
-          </Dialog>
-        </Transition.Root>
+          </div>
+        </Dialog>
+      </Transition.Root>
 
-        <main className="flex-1">
-          <div className="py-8 xl:py-10">
-            <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 xl:grid xl:max-w-5xl xl:grid-cols-3">
-              <div className="xl:col-span-2 xl:border-r xl:border-gray-200 xl:pr-8">
+      <main className="flex-1">
+        <div className="py-8 xl:py-10">
+          <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 xl:grid xl:max-w-5xl xl:grid-cols-3">
+            <div className="xl:col-span-2 xl:border-r xl:border-gray-200 xl:pr-8">
+              <div>
                 <div>
-                  <div>
-                    <div className="md:flex md:items-center md:justify-between md:space-x-4 xl:border-b xl:pb-6">
-                      <div>
-                        <h1 className="text-2xl font-bold text-gray-900">
-                          {taskData.title}
-                        </h1>
-                        <p className="mt-2 text-sm text-gray-500">
-                          #400 opened by{" "}
-                          <a href="#" className="font-medium text-gray-900">
-                            Hilary Mahy
-                          </a>{" "}
-                          in{" "}
-                          <a href="#" className="font-medium text-gray-900">
-                            Customer Portal
-                          </a>
-                        </p>
-                      </div>
+                  <div className="md:flex md:items-center md:justify-between md:space-x-4 xl:border-b xl:pb-6">
+                    <div>
+                      <h1 className="text-2xl font-bold text-gray-900">
+                        {taskData.title}
+                      </h1>
+                      <p className="mt-2 text-sm text-gray-500">
+                        #400 opened by{" "}
+                        <a href="#" className="font-medium text-gray-900">
+                          Hilary Mahy
+                        </a>{" "}
+                        in{" "}
+                        <a href="#" className="font-medium text-gray-900">
+                          Customer Portal
+                        </a>
+                      </p>
                     </div>
-                    <aside className="mt-8 xl:hidden">
-                      <h2 className="sr-only">Details</h2>
-                      <div className="space-y-5">
-                        <div className="flex items-center space-x-2">
-                          <LockOpenIcon
-                              className="h-5 w-5 text-green-500"
-                              aria-hidden="true"
-                          />
-                          <span className="text-sm font-medium text-green-700">
+                  </div>
+                  <aside className="mt-8 xl:hidden">
+                    <h2 className="sr-only">Details</h2>
+                    <div className="space-y-5">
+                      <div className="flex items-center space-x-2">
+                        <LockOpenIcon
+                          className="h-5 w-5 text-green-500"
+                          aria-hidden="true"
+                        />
+                        <span className="text-sm font-medium text-green-700">
                           Open Issue
                         </span>
-                        </div>
-                        <div className="flex items-center space-x-2">
-                          <CalendarIcon
-                              className="h-5 w-5 text-gray-400"
-                              aria-hidden="true"
-                          />
-                          <span className="text-sm font-medium text-gray-900">
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <CalendarIcon
+                          className="h-5 w-5 text-gray-400"
+                          aria-hidden="true"
+                        />
+                        <span className="text-sm font-medium text-gray-900">
                           Created on{" "}
-                            <time dateTime="2020-12-02">Dec 2, 2020</time>
+                          <time dateTime="2020-12-02">Dec 2, 2020</time>
                         </span>
-                        </div>
                       </div>
-                      <div className="mt-6 space-y-8 border-t border-b border-gray-200 py-6">
-                        <div>
-                          <h2 className="text-sm font-medium text-gray-500">
-                            Assignees
-                          </h2>
-                          <ul role="list" className="mt-3 space-y-3">
-                            <li className="flex justify-start">
-                              <a href="#" className="flex items-center space-x-3">
-                                <div className="flex-shrink-0">
-                                  <img
-                                      className="h-5 w-5 rounded-full"
-                                      src="https://images.unsplash.com/photo-1520785643438-5bf77931f493?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=256&h=256&q=80"
-                                      alt=""
-                                  />
-                                </div>
-                                <div className="text-sm font-medium text-gray-900">
-                                  {taskData.members}
-                                </div>
-                              </a>
-                            </li>
-                          </ul>
-                        </div>
-                        <div>
-                          <h2 className="text-sm font-medium text-gray-500">
-                            Tags
-                          </h2>
-                          <ul role="list" className="mt-2 leading-8">
-                            <li className="inline">
-                              <a
-                                  href="#"
-                                  className="relative inline-flex items-center rounded-full border border-gray-300 px-3 py-0.5"
-                              >
-                                <div className="absolute flex flex-shrink-0 items-center justify-center">
-                                <span
-                                    className="h-1.5 w-1.5 rounded-full bg-rose-500"
-                                    aria-hidden="true"
+                    </div>
+                    <div className="mt-6 space-y-8 border-t border-b border-gray-200 py-6">
+                      <div>
+                        <h2 className="text-sm font-medium text-gray-500">
+                          Assignees
+                        </h2>
+                        <ul role="list" className="mt-3 space-y-3">
+                          <li className="flex justify-start">
+                            <a href="#" className="flex items-center space-x-3">
+                              <div className="flex-shrink-0">
+                                <img
+                                  className="h-5 w-5 rounded-full"
+                                  src="https://images.unsplash.com/photo-1520785643438-5bf77931f493?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=256&h=256&q=80"
+                                  alt=""
                                 />
-                                </div>
-                                <div className="ml-3.5 text-sm font-medium text-gray-900">
-                                  Bug
-                                </div>
-                              </a>{" "}
-                            </li>
-                            <li className="inline">
-                              <a
-                                  href="#"
-                                  className="relative inline-flex items-center rounded-full border border-gray-300 px-3 py-0.5"
-                              >
-                                <div className="absolute flex flex-shrink-0 items-center justify-center">
-                                <span
-                                    className="h-1.5 w-1.5 rounded-full bg-indigo-500"
-                                    aria-hidden="true"
-                                />
-                                </div>
-                                <div className="ml-3.5 text-sm font-medium text-gray-900">
-                                  Accessibility
-                                </div>
-                              </a>{" "}
-                            </li>
-                          </ul>
-                        </div>
+                              </div>
+                              <div className="text-sm font-medium text-gray-900">
+                                {taskData.members.length}
+                              </div>
+                            </a>
+                          </li>
+                        </ul>
                       </div>
-                    </aside>
-                    <div className="py-3 xl:pt-6 xl:pb-0">
-                      <h2 className="sr-only">Description</h2>
-                      <div className="prose max-w-none">
-                        <p>
-                          {taskData.details}
-                        </p>
-                        <ul role="list">
-                          <li>
-                            Tempor ultrices proin nunc fames nunc ut auctor vitae
-                            sed. Eget massa parturient vulputate fermentum id
-                            facilisis nam pharetra. Aliquet leo tellus.
+                      <div>
+                        <h2 className="text-sm font-medium text-gray-500">
+                          Tags
+                        </h2>
+                        <ul role="list" className="mt-2 leading-8">
+                          <li className="inline">
+                            <a
+                              href="#"
+                              className="relative inline-flex items-center rounded-full border border-gray-300 px-3 py-0.5"
+                            >
+                              <div className="absolute flex flex-shrink-0 items-center justify-center">
+                                <span
+                                  className="h-1.5 w-1.5 rounded-full bg-rose-500"
+                                  aria-hidden="true"
+                                />
+                              </div>
+                              <div className="ml-3.5 text-sm font-medium text-gray-900">
+                                Bug
+                              </div>
+                            </a>{" "}
                           </li>
-                          <li>
-                            Turpis ac nunc adipiscing adipiscing metus tincidunt
-                            senectus tellus.
-                          </li>
-                          <li>
-                            Semper interdum porta sit tincidunt. Dui suspendisse
-                            scelerisque amet metus eget sed. Ut tellus in sed
-                            dignissim.
+                          <li className="inline">
+                            <a
+                              href="#"
+                              className="relative inline-flex items-center rounded-full border border-gray-300 px-3 py-0.5"
+                            >
+                              <div className="absolute flex flex-shrink-0 items-center justify-center">
+                                <span
+                                  className="h-1.5 w-1.5 rounded-full bg-indigo-500"
+                                  aria-hidden="true"
+                                />
+                              </div>
+                              <div className="ml-3.5 text-sm font-medium text-gray-900">
+                                Accessibility
+                              </div>
+                            </a>{" "}
                           </li>
                         </ul>
                       </div>
                     </div>
+                  </aside>
+                  <div className="py-3 xl:pt-6 xl:pb-0">
+                    <h2 className="sr-only">Description</h2>
+                    <div className="prose max-w-none">
+                      <p>{taskData.description}</p>
+                      <ul role="list">
+                        <li>
+                          Tempor ultrices proin nunc fames nunc ut auctor vitae
+                          sed. Eget massa parturient vulputate fermentum id
+                          facilisis nam pharetra. Aliquet leo tellus.
+                        </li>
+                        <li>
+                          Turpis ac nunc adipiscing adipiscing metus tincidunt
+                          senectus tellus.
+                        </li>
+                        <li>
+                          Semper interdum porta sit tincidunt. Dui suspendisse
+                          scelerisque amet metus eget sed. Ut tellus in sed
+                          dignissim.
+                        </li>
+                      </ul>
+                    </div>
                   </div>
                 </div>
-                <section
-                    aria-labelledby="activity-title"
-                    className="mt-8 xl:mt-10"
-                >
-                  <div>
-                    <div className="divide-y divide-gray-200">
-
-                      <div className="pt-6">
-                        {/* Activity feed*/}
-                        <div className="flow-root">
-                        </div>
-                        <div className="mt-6">
-                          <div className="flex space-x-3">
-                            <div className="min-w-0 flex-1">
-                              <form action="#">
-                                <div className="mt-6 flex items-center justify-end space-x-4">
-                                  <button
-                                      type="button"
-                                      className="inline-flex justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2"
-                                      onClick={onButtonCloseClick}
-                                  >
-                                    <CheckCircleIcon
-                                        className="-ml-1 mr-2 h-5 w-5 text-green-500"
-                                        aria-hidden="true"
-                                    />
-                                    <span>Close issue</span>
-                                  </button>
-                                </div>
-                              </form>
-                            </div>
+              </div>
+              <section
+                aria-labelledby="activity-title"
+                className="mt-8 xl:mt-10"
+              >
+                <div>
+                  <div className="divide-y divide-gray-200">
+                    <div className="pt-6">
+                      {/* Activity feed*/}
+                      <div className="flow-root"></div>
+                      <div className="mt-6">
+                        <div className="flex space-x-3">
+                          <div className="min-w-0 flex-1">
+                            <form action="#">
+                              <div className="mt-6 flex items-center justify-end space-x-4">
+                                <button
+                                  type="button"
+                                  className="inline-flex justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2"
+                                  onClick={onButtonCloseClick}
+                                >
+                                  <CheckCircleIcon
+                                    className="-ml-1 mr-2 h-5 w-5 text-green-500"
+                                    aria-hidden="true"
+                                  />
+                                  <span>Close issue</span>
+                                </button>
+                              </div>
+                            </form>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </section>
-              </div>
-              <aside className="hidden xl:block xl:pl-8">
-                <h2 className="sr-only">Details</h2>
-                <div className="space-y-5">
-                  <div className="flex items-center space-x-2">
-                    <LockOpenIcon
-                        className="h-5 w-5 text-green-500"
-                        aria-hidden="true"
-                    />
-                    <span className="text-sm font-medium text-green-700">
+                </div>
+              </section>
+            </div>
+            <aside className="hidden xl:block xl:pl-8">
+              <h2 className="sr-only">Details</h2>
+              <div className="space-y-5">
+                <div className="flex items-center space-x-2">
+                  <LockOpenIcon
+                    className="h-5 w-5 text-green-500"
+                    aria-hidden="true"
+                  />
+                  <span className="text-sm font-medium text-green-700">
                     Open Issue
                   </span>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <CalendarIcon
-                        className="h-5 w-5 text-gray-400"
-                        aria-hidden="true"
-                    />
-                    <span className="text-sm font-medium text-gray-900">
+                </div>
+                <div className="flex items-center space-x-2">
+                  <CalendarIcon
+                    className="h-5 w-5 text-gray-400"
+                    aria-hidden="true"
+                  />
+                  <span className="text-sm font-medium text-gray-900">
                     Created on <time>{taskData.dateOfCreation}</time>
                   </span>
-                  </div>
                 </div>
-                <div className="mt-6 space-y-8 border-t border-gray-200 py-6">
-                  <div>
-                    <h2 className="text-sm font-medium text-gray-500">
-                      Assignees
-                    </h2>
-                    <ul role="list" className="mt-3 space-y-3">
-                      <li className="flex justify-start">
-                        <a href="#" className="flex items-center space-x-3">
-                          <div className="flex-shrink-0">
-                            <img
-                                className="h-5 w-5 rounded-full"
-                                src="https://images.unsplash.com/photo-1520785643438-5bf77931f493?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=256&h=256&q=80"
-                                alt=""
-                            />
-                          </div>
-                          <div className="text-sm font-medium text-gray-900">
-                            Eduardo Benz
-                          </div>
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
-                  <div>
-                    <h2 className="text-sm font-medium text-gray-500">Tags</h2>
-                    <ul role="list" className="mt-2 leading-8">
-                      <li className="inline">
-                        <a
-                            href="#"
-                            className="relative inline-flex items-center rounded-full border border-gray-300 px-3 py-0.5"
-                        >
-                          <div className="absolute flex flex-shrink-0 items-center justify-center">
-                          <span
-                              className="h-1.5 w-1.5 rounded-full bg-rose-500"
-                              aria-hidden="true"
+              </div>
+              <div className="mt-6 space-y-8 border-t border-gray-200 py-6">
+                <div>
+                  <h2 className="text-sm font-medium text-gray-500">
+                    Assignees
+                  </h2>
+                  <ul role="list" className="mt-3 space-y-3">
+                    <li className="flex justify-start">
+                      <a href="#" className="flex items-center space-x-3">
+                        <div className="flex-shrink-0">
+                          <img
+                            className="h-5 w-5 rounded-full"
+                            src="https://images.unsplash.com/photo-1520785643438-5bf77931f493?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=256&h=256&q=80"
+                            alt=""
                           />
-                          </div>
-                          <div className="ml-3.5 text-sm font-medium text-gray-900">
-                            Bug
-                          </div>
-                        </a>{" "}
-                      </li>
-                      <li className="inline">
-                        <a
-                            href="#"
-                            className="relative inline-flex items-center rounded-full border border-gray-300 px-3 py-0.5"
-                        >
-                          <div className="absolute flex flex-shrink-0 items-center justify-center">
-                          <span
-                              className="h-1.5 w-1.5 rounded-full bg-indigo-500"
-                              aria-hidden="true"
-                          />
-                          </div>
-                          <div className="ml-3.5 text-sm font-medium text-gray-900">
-                            Accessibility
-                          </div>
-                        </a>{" "}
-                      </li>
-                    </ul>
-                  </div>
+                        </div>
+                        <div className="text-sm font-medium text-gray-900">
+                          Eduardo Benz
+                        </div>
+                      </a>
+                    </li>
+                  </ul>
                 </div>
-              </aside>
-            </div>
+                <div>
+                  <h2 className="text-sm font-medium text-gray-500">Tags</h2>
+                  <ul role="list" className="mt-2 leading-8">
+                    <li className="inline">
+                      <a
+                        href="#"
+                        className="relative inline-flex items-center rounded-full border border-gray-300 px-3 py-0.5"
+                      >
+                        <div className="absolute flex flex-shrink-0 items-center justify-center">
+                          <span
+                            className="h-1.5 w-1.5 rounded-full bg-rose-500"
+                            aria-hidden="true"
+                          />
+                        </div>
+                        <div className="ml-3.5 text-sm font-medium text-gray-900">
+                          Bug
+                        </div>
+                      </a>{" "}
+                    </li>
+                    <li className="inline">
+                      <a
+                        href="#"
+                        className="relative inline-flex items-center rounded-full border border-gray-300 px-3 py-0.5"
+                      >
+                        <div className="absolute flex flex-shrink-0 items-center justify-center">
+                          <span
+                            className="h-1.5 w-1.5 rounded-full bg-indigo-500"
+                            aria-hidden="true"
+                          />
+                        </div>
+                        <div className="ml-3.5 text-sm font-medium text-gray-900">
+                          Accessibility
+                        </div>
+                      </a>{" "}
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </aside>
           </div>
-        </main>
-      </div>
+        </div>
+      </main>
+    </div>
   );
-}
+};
 
 function Example() {
   const [sidebarOpen, setSidebarOpen] = useState(false);

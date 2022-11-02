@@ -4,6 +4,9 @@ import { taskState } from "../../../global-state/task-atom";
 import { CustomButton } from "../../custom-ui-elements/button/button";
 import { CustomInputField } from "../../custom-ui-elements/input-field/custom-input-field";
 import { RadioButton } from "../../custom-ui-elements/radio-button/radio-button";
+import { AddTeamMember } from "../../project/team/add-team-member";
+import { TeamMember } from "../../project/team/team-member";
+import { TeamMemberItem } from "../../project/team/team-member-list-item";
 
 type AddTaskModalProps = {
   onSuccess: () => void;
@@ -35,15 +38,7 @@ export const AddTaskModal = ({ onSuccess }: AddTaskModalProps) => {
 
   function onButtonCreateClick() {
     if (isValid()) {
-      setTasks(
-        tasks.concat({
-          id: tasks.length + 1,
-          title: taskName,
-          initials: taskInitials,
-          bgColor: taskColor,
-          columnId: 0,
-        })
-      );
+      //create Task
       onSuccess();
     }
   }
@@ -73,6 +68,8 @@ export const AddTaskModal = ({ onSuccess }: AddTaskModalProps) => {
           </div>
         </div>
       </form>
+
+      <TeamMemberItem person={{ id: 1, name: "Verena" }} />
 
       <CustomButton
         onClick={onButtonCreateClick}

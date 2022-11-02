@@ -1,12 +1,14 @@
+import { TeamMemberData } from "./team-member-data";
+
 export interface TaskData {
   id: number;
   title: string;
+  description: string;
   dateOfCreation?: string;
   initials: string;
-  href: string;
-  members: number;
+  members: TeamMemberData[];
   bgColor: string;
-  details: string;
+  columnId: number;
 }
 
 export function getCurrentDate(separator = "") {
