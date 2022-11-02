@@ -4,9 +4,7 @@ import { taskState } from "../../../global-state/task-atom";
 import { CustomButton } from "../../custom-ui-elements/button/button";
 import { CustomInputField } from "../../custom-ui-elements/input-field/custom-input-field";
 import { RadioButton } from "../../custom-ui-elements/radio-button/radio-button";
-import { AddTeamMember } from "../../project/team/add-team-member";
 import { TeamMember } from "../../project/team/team-member";
-import { TeamMemberItem } from "../../project/team/team-member-list-item";
 
 type AddTaskModalProps = {
   onSuccess: () => void;
@@ -69,7 +67,7 @@ export const AddTaskModal = ({ onSuccess }: AddTaskModalProps) => {
         </div>
       </form>
 
-      <TeamMemberItem person={{ id: 1, name: "Verena" }} />
+      <TeamMember shouldShowAddTeamMembers={false} teamMembers={}/>
 
       <CustomButton
         onClick={onButtonCreateClick}

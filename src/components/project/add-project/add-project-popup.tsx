@@ -2,6 +2,7 @@ import { ChangeEvent, Fragment, useState } from "react";
 import { useRecoilState } from "recoil";
 import { projectState } from "../../../global-state/project-atom";
 import { selectedTeamMembersState } from "../../../global-state/selected-team-member-atom";
+import { teamMembersState } from "../../../global-state/team-member-atom";
 import { getCurrentDate } from "../../../interfaces/project-data";
 import { CustomButton } from "../../custom-ui-elements/button/button";
 import { CustomInputField } from "../../custom-ui-elements/input-field/custom-input-field";
@@ -14,6 +15,7 @@ type AddProjectModalProps = {
 export const AddProjectModal = ({ onSuccess }: AddProjectModalProps) => {
   const [projectName, setProjectName] = useState<string>("");
   const [projects, setProjects] = useRecoilState(projectState);
+  const [teamMembers] = useRecoilState(teamMembersState);
   const [selectedTeamMembers, setSelectedTeamMembers] = useRecoilState(
     selectedTeamMembersState
   );
@@ -61,7 +63,7 @@ export const AddProjectModal = ({ onSuccess }: AddProjectModalProps) => {
           placeholder="Enter the project name"
         />
       </form>
-      <TeamMember />
+      <TeamMember shouldShowAddTeamMembers={true} teamMembers={teamMembers} />
       <CustomButton
         onClick={onButtonCreateClick}
         buttonText="Create Project"
