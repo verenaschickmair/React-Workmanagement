@@ -6,7 +6,7 @@ import { ProjectItem } from "./components/project/project-item";
 function App() {
   return (
     <RecoilRoot>
-      <div className="app">
+      <div className="app grid h-screen place-items-center">
         <Routes>
           <Route path="/" element={<ProjectItem />} />
           <Route path="/projects/:id" element={<Board />} />

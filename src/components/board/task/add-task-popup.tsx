@@ -1,6 +1,9 @@
 import { ChangeEvent, Fragment, useState } from "react";
 import { useRecoilState } from "recoil";
-import { taskState } from "../../../global-state/task-atom";
+import { teamMembersState } from "../../../global-state/team-member-atom";
+import { getCurrentDate } from "../../../interfaces/project-data";
+import { TaskData } from "../../../interfaces/task-data";
+import { TeamMemberData } from "../../../interfaces/team-member-data";
 import { CustomButton } from "../../custom-ui-elements/button/button";
 import { CustomInputField } from "../../custom-ui-elements/input-field/custom-input-field";
 import { RadioButton } from "../../custom-ui-elements/radio-button/radio-button";
@@ -8,22 +11,24 @@ import { TeamMember } from "../../project/team/team-member";
 
 type AddTaskModalProps = {
   onSuccess: () => void;
+  tasks: TaskData[];
 };
 
-export const AddTaskModal = ({ onSuccess }: AddTaskModalProps) => {
-  const [taskName, setTaskName] = useState<string>("");
-  const [taskColor, setTaskColor] = useState<string>("");
-  const [taskInitials, setTaskInitials] = useState<string>("");
-  const [tasks, setTasks] = useRecoilState(taskState);
+export const AddTaskModal = ({ onSuccess, tasks }: AddTaskModalProps) => {
+  const [taskTitle, setTaskTitle] = useState<string>("");
+  const [taskDescription, setTaskDescription] = useState<string>("");
+  const [taskBgColor, setTaskBgColor] = useState<string>("");
+  const [taskMembers, setTaskMembers] = useState<TeamMemberData[]>();
 
   const onInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setTaskName(event.target.value);
-    setTaskInitials(setInitials());
-    setTaskColor(event.target.value);
+    setTaskTitle(event.target.value);
+    setTaskDescription(event.target.value);
+    setTaskBgColor(event.target.value);
+    setTaskMembers(undefined);
   };
 
   function isValid(): boolean {
-    if (!taskName || taskName.length < 3) {
+    if (!taskTitle || taskTitle.length < 3) {
       alert("Project name empty or too short");
       return false;
     }
@@ -31,12 +36,22 @@ export const AddTaskModal = ({ onSuccess }: AddTaskModalProps) => {
   }
 
   function setInitials(): string {
-    return taskName.slice(0, 2);
+    return taskTitle.slice(0, 2);
   }
 
   function onButtonCreateClick() {
     if (isValid()) {
-      //create Task
+      if (taskMembers) {
+        tasks.push({
+          id: tasks.length + 1,
+          title: taskTitle,
+          description: taskDescription,
+          dateOfCreation: getCurrentDate("."),
+          members: taskMembers,
+          bgColor: taskBgColor,
+          columnId: 0,
+        });
+      }
       onSuccess();
     }
   }
@@ -51,7 +66,7 @@ export const AddTaskModal = ({ onSuccess }: AddTaskModalProps) => {
           idTag="task-name"
           type="text"
           onChange={onInputChange}
-          value={taskName}
+          value={taskTitle}
           placeholder="Enter the task name"
         />
 
@@ -67,7 +82,7 @@ export const AddTaskModal = ({ onSuccess }: AddTaskModalProps) => {
         </div>
       </form>
 
-      <TeamMember shouldShowAddTeamMembers={false} teamMembers={}/>
+      <TeamMember shouldShowAddTeamMembers={false} teamMembers={[]} />
 
       <CustomButton
         onClick={onButtonCreateClick}

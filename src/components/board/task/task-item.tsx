@@ -36,11 +36,11 @@ export const TaskItem = ({ taskData }: TaskItemProps) => {
       >
         <div
           className={classNames(
-            taskData.bgColor,
+            taskData.bgColor ?? "bg-red-500",
             "flex-shrink-0 flex items-center justify-center w-16 h-full text-white text-sm font-medium rounded"
           )}
         >
-          {taskData.initials}
+          {taskData.title.slice(0, 2)}
         </div>
         <div className="flex-1 truncate px-4 py-2 text-sm">
           {taskData.title}

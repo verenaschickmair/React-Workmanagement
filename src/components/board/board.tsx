@@ -2,13 +2,12 @@ import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Fragment } from "react";
 import { useLocation } from "react-router-dom";
-import { BoardColumnData } from "../../interfaces/board-column-data";
 import { ProjectData } from "../../interfaces/project-data";
 import { BoardColumn } from "./board-column/board-column";
 import { AddTask } from "./task/add-task";
 import { RecoilState, useRecoilState, useSetRecoilState } from "recoil";
-import { taskState } from "../../global-state/task-atom";
 import { TaskData } from "../../interfaces/task-data";
+import { BoardColumnData } from "../../interfaces/board-column-data";
 
 const boardColumns: BoardColumnData[] = [
   {
@@ -41,13 +40,11 @@ function classNames(...classes: any) {
 }
 
 export default function Board() {
-  const [task, setTask] = useRecoilState(taskState);
   const location = useLocation();
   const project: ProjectData = location.state.project;
-  const tasks: TaskData[] = location.state.tasks;
 
   return (
-    <div className="min-h-full">
+    <div className="min-h-full w-full">
       <div className="py-10">
         <header>
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -64,7 +61,7 @@ export default function Board() {
                   <BoardColumn
                     name={column.name}
                     key={column.id}
-                    tasks={getColumnTasks(tasks, column.id)}
+                    tasks={getColumnTasks(project.tasks, column.id)}
                   />
                 ))}
               </div>
@@ -72,7 +69,7 @@ export default function Board() {
           </div>
         </main>
       </div>
-      <AddTask />
+      <AddTask tasks={project.tasks} />
     </div>
   );
 }

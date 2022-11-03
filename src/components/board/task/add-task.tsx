@@ -1,13 +1,16 @@
 import { PlusIcon } from "@heroicons/react/20/solid";
 import { useState } from "react";
 import { useRecoilState } from "recoil";
-import { taskState } from "../../../global-state/task-atom";
+import { TaskData } from "../../../interfaces/task-data";
 import { CustomButton } from "../../custom-ui-elements/button/button";
 import { Popup } from "../../popup/popup";
 import { AddTaskModal } from "./add-task-popup";
 
-export const AddTask = () => {
-  const [tasks] = useRecoilState(taskState);
+type AddTaskProps = {
+  tasks: TaskData[];
+};
+
+export const AddTask = ({ tasks }: AddTaskProps) => {
   const [showAddTaskView, setShowAddTaskView] = useState(false);
 
   function onButtonClick() {
@@ -26,7 +29,7 @@ export const AddTask = () => {
           icon={<PlusIcon className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />}
         />
         <Popup trigger={showAddTaskView} onCloseClick={onPopupClose}>
-          <AddTaskModal onSuccess={onPopupClose} />
+          <AddTaskModal tasks={tasks} onSuccess={onPopupClose} />
         </Popup>
       </div>
     </div>

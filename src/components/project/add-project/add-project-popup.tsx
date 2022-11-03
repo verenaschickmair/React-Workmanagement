@@ -43,6 +43,7 @@ export const AddProjectModal = ({ onSuccess }: AddProjectModalProps) => {
           title: projectName,
           dateOfCreation: getCurrentDate("."),
           teamMembers: selectedTeamMembers,
+          tasks: [],
         })
       );
       onSuccess();
