@@ -1,4 +1,4 @@
-import { TaskData } from "./task-data";
+import { BoardData } from "./board-data";
 import { TeamMemberData } from "./team-member-data";
 
 export interface ProjectData {
@@ -6,7 +6,7 @@ export interface ProjectData {
   title: string;
   dateOfCreation?: string;
   teamMembers: TeamMemberData[];
-  tasks: TaskData[];
+  board: BoardData;
 }
 
 export function getCurrentDate(separator = "") {

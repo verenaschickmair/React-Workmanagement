@@ -3,6 +3,7 @@ import { useRecoilState } from "recoil";
 import { projectState } from "../../../global-state/project-atom";
 import { selectedTeamMembersState } from "../../../global-state/selected-team-member-atom";
 import { teamMembersState } from "../../../global-state/team-member-atom";
+import { BoardColumnData } from "../../../interfaces/board-column-data";
 import { getCurrentDate } from "../../../interfaces/project-data";
 import { CustomButton } from "../../custom-ui-elements/button/button";
 import { CustomInputField } from "../../custom-ui-elements/input-field/custom-input-field";
@@ -11,6 +12,34 @@ import { TeamMember } from "../team/team-member";
 type AddProjectModalProps = {
   onSuccess: () => void;
 };
+
+const boardColumns: BoardColumnData[] = [
+  {
+    id: 0,
+    name: "Backlog",
+    tasks: [],
+  },
+  {
+    id: 1,
+    name: "Todo",
+    tasks: [],
+  },
+  {
+    id: 2,
+    name: "In Progress",
+    tasks: [],
+  },
+  {
+    id: 3,
+    name: "Review",
+    tasks: [],
+  },
+  {
+    id: 4,
+    name: "Done",
+    tasks: [],
+  },
+];
 
 export const AddProjectModal = ({ onSuccess }: AddProjectModalProps) => {
   const [projectName, setProjectName] = useState<string>("");
@@ -43,7 +72,7 @@ export const AddProjectModal = ({ onSuccess }: AddProjectModalProps) => {
           title: projectName,
           dateOfCreation: getCurrentDate("."),
           teamMembers: selectedTeamMembers,
-          tasks: [],
+          board: { id: 1, columns: boardColumns },
         })
       );
       onSuccess();

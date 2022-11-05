@@ -1,10 +1,7 @@
-import { EllipsisVerticalIcon, PlusIcon } from "@heroicons/react/20/solid";
+import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
 import { Fragment, useState } from "react";
-import { useRecoilState } from "recoil";
-import { projectState } from "../../../global-state/project-atom";
 import { TaskData } from "../../../interfaces/task-data";
 import { Popup } from "../../popup/popup";
-import { AddProjectModal } from "../../project/add-project/add-project-popup";
 import { TaskDetail } from "./details/task-detail";
 
 function classNames(...classes: string[]) {

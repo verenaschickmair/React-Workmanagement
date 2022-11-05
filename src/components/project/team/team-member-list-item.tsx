@@ -24,7 +24,7 @@ export const TeamMemberItem = ({
       setSelectedTeamMembers(selectedTeamMembers.concat(member));
     } else {
       setSelectedTeamMembers(
-        selectedTeamMembers.filter((person) => person != member)
+        selectedTeamMembers.filter((person) => person !== member)
       );
     }
   };
