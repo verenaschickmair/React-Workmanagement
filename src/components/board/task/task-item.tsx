@@ -1,5 +1,5 @@
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
-import { Fragment, useState } from "react";
+import { useState } from "react";
 import { TaskData } from "../../../interfaces/task-data";
 import { Popup } from "../../popup/popup";
 import { DragAndDrop } from "../drag-and-drop";
@@ -24,7 +24,7 @@ export const TaskItem = ({ taskData }: TaskItemProps) => {
   }
 
   return (
-    <Fragment>
+    <div>
       <Popup trigger={showTaskDetailView} onCloseClick={onPopupClose}>
         <TaskDetail taskData={taskData} onSuccess={onPopupClose} />
       </Popup>
@@ -56,6 +56,6 @@ export const TaskItem = ({ taskData }: TaskItemProps) => {
         </div>
       </div>
       <DragAndDrop />
-    </Fragment>
+    </div>
   );
 };
