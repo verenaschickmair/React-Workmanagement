@@ -44,7 +44,7 @@ export const AddTaskModal = ({ onSuccess, teamMembers }: AddTaskModalProps) => {
 
   function onButtonCreateClick() {
     if (isValid()) {
-      if (taskMembers) {
+      if (taskMembers && taskMembers.length) {
         setTasks(
           tasks.concat({
             ...tasks,

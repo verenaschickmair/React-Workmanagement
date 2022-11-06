@@ -18,7 +18,10 @@ export const BoardColumn = ({ name, id }: BoardColumnProps) => {
   return (
     <div>
       <h2 className="text-lg text-center mb-2">{name}</h2>
-      <div className="top-6 h-96 space-y-4 bg-gray-100 w-full">
+      <div
+        className="dropBox top-6 h-96 bg-gray-100 w-full"
+        id={"drop" + id.toString()}
+      >
         <ul className="grid grid-cols-1">
           {renderColumnTasks(tasks, id).map((task) => (
             <TaskItem taskData={task} key={task.id} />
