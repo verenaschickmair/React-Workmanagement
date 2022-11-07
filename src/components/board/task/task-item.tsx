@@ -55,7 +55,7 @@ export const TaskItem = ({ taskData }: TaskItemProps) => {
           </button>
         </div>
       </div>
-      <DragAndDrop />
+      <DragAndDrop taskData={taskData} />
     </div>
   );
 };
