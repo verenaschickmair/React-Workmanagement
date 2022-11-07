@@ -8,19 +8,55 @@ export const DragAndDrop = () => {
   const [dragItems, setDragItems] = useState<NodeList>(
     document.querySelectorAll(".dragItem")
   );
-  const [listnerState, setListenerState] = useState<Boolean>(false);
+
+  useEffect(()=>{
+    const dropBoxes = document.querySelectorAll(".dropBox");
+    dropBoxes?.forEach((box) => {
+      console.log("SHIGSHAG");
+      box.removeEventListener("dragenter", dragEnter);
+      box.removeEventListener("dragover", dragOver);
+      box.removeEventListener("dragleave", dragLeave);
+      box.removeEventListener("drop", drop);
+      box.addEventListener("dragenter", dragEnter);
+      box.addEventListener("dragover", dragOver);
+      box.addEventListener("dragleave", dragLeave);
+      box.addEventListener("drop", drop);
+
+      
+    })
+    return () =>{
+      dropBoxes?.forEach((box) => {
+        console.log("SHIGSHAG");
+        box.removeEventListener("dragenter", dragEnter);
+        box.removeEventListener("dragover", dragOver);
+        box.removeEventListener("dragleave", dragLeave);
+        box.removeEventListener("drop", drop);
+      })
+    }
+  },[])
 
   useEffect(() => {
     console.log("USE EFFECT");
-    setDragItems(document.querySelectorAll(".dragItem"));
-  }, [tasks, setDragItems]);
+    const items = document.querySelectorAll(".dragItem")
+    items?.forEach((item) => {
+      item?.removeEventListener("dragstart", dragStart);
+      item?.addEventListener("dragstart", dragStart);
+    });
+    
+    return () =>{
+      items?.forEach((item) => {
+        item?.removeEventListener("dragstart", dragStart);
+      });
+    }
+  }, [tasks]);
 
   //DRAG
   // attach the dragstart event handler
+  /*
   dragItems?.forEach((item) => {
     item?.removeEventListener("dragstart", dragStart);
     item?.addEventListener("dragstart", dragStart);
-  });
+  });*/
 
   // handle the dragstart
   function dragStart(e: any) {
@@ -30,8 +66,9 @@ export const DragAndDrop = () => {
   }
 
   //DROP
-  const dropBoxes = document.querySelectorAll(".dropBox");
+  //const dropBoxes = document.querySelectorAll(".dropBox");
 
+  /*
   dropBoxes?.forEach((box) => {
     console.log("SHIGSHAG");
     box.removeEventListener("dragenter", dragEnter);
@@ -42,7 +79,7 @@ export const DragAndDrop = () => {
     box.addEventListener("dragover", dragOver);
     box.addEventListener("dragleave", dragLeave);
     box.addEventListener("drop", drop);
-  });
+  });*/
 
   function dragEnter(e: any) {
     e.preventDefault();
@@ -82,7 +119,7 @@ export const DragAndDrop = () => {
 
       // add it to item?.removeEventListener("dragstart", dragStart); the drop target
       //e.target.appendChild(draggable);
-      setListenerState(true);
+      
 
       setTasks(changeTasks);
     }
