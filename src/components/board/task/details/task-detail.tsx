@@ -21,7 +21,7 @@ import {
   UserCircleIcon as UserCircleIconMini,
 } from "@heroicons/react/20/solid";
 import { TaskData } from "../../../../interfaces/task-data";
-import { getCurrentDate } from "../../../../interfaces/project-data";
+import {AssigneeItem} from "../../../custom-ui-elements/list-items/assignee-item";
 
 const projects = [
   { id: 1, name: "GraphQL API", href: "#" },
@@ -169,7 +169,7 @@ export const TaskDetail = ({ taskData, onSuccess }: TaskDetailProps) => {
                         {taskData.title}
                       </h1>
                       <p className="mt-2 text-sm text-gray-500">
-                        #400 opened by{" "}
+                        #{taskData.id} opened by{" "}
                         <a href="#" className="font-medium text-gray-900">
                           Hilary Mahy
                         </a>{" "}
@@ -250,22 +250,15 @@ export const TaskDetail = ({ taskData, onSuccess }: TaskDetailProps) => {
                   <h2 className="text-sm font-medium text-gray-500">
                     Assignees
                   </h2>
-                  <ul role="list" className="mt-3 space-y-3">
-                    <li className="flex justify-start">
-                      <a href="#" className="flex items-center space-x-3">
-                        <div className="flex-shrink-0">
-                          <img
-                            className="h-5 w-5 rounded-full"
-                            src="https://images.unsplash.com/photo-1520785643438-5bf77931f493?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=256&h=256&q=80"
-                            alt=""
-                          />
-                        </div>
-                        <div className="text-sm font-medium text-gray-900">
-                          Eduardo Benz
-                        </div>
-                      </a>
-                    </li>
-                  </ul>
+                  <div className="mx-auto max-w-md sm:max-w-3xl">
+                      <ul role="list" className="mt-3 space-y-3">
+                        {taskData.members.map((person) => (
+                            <li key={person.id}>
+                              <AssigneeItem person={person} />
+                            </li>
+                        ))}
+                      </ul>
+                  </div>
                 </div>
               </div>
             </aside>
