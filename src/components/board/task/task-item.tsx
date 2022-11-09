@@ -1,10 +1,8 @@
-import { EllipsisVerticalIcon, PlusIcon } from "@heroicons/react/20/solid";
-import { Fragment, useState } from "react";
-import { useRecoilState } from "recoil";
-import { projectState } from "../../../global-state/project-atom";
+import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
+import { useState } from "react";
 import { TaskData } from "../../../interfaces/task-data";
 import { Popup } from "../../popup/popup";
-import { AddProjectModal } from "../../project/add-project/add-project-popup";
+import { DragAndDrop } from "../drag-and-drop";
 import { TaskDetail } from "./details/task-detail";
 
 function classNames(...classes: string[]) {
@@ -26,21 +24,23 @@ export const TaskItem = ({ taskData }: TaskItemProps) => {
   }
 
   return (
-    <Fragment>
+    <div>
       <Popup trigger={showTaskDetailView} onCloseClick={onPopupClose}>
         <TaskDetail taskData={taskData} onSuccess={onPopupClose} />
       </Popup>
       <div
-        className="flex flex-1 cursor-pointer items-center justify-between truncate rounded-r-md border-t border-r border-b border-gray-200 bg-white hover:bg-gray-200"
+        className="dragItem flex flex-1 h-16 cursor-pointer items-center justify-between truncate rounded-r-md border-t border-r border-b border-gray-200 bg-white hover:bg-gray-200"
+        draggable="true"
         onClick={onButtonClick}
+        id={"drag" + taskData.id.toString()}
       >
         <div
           className={classNames(
-            taskData.bgColor,
-            "flex-shrink-0 flex items-center justify-center w-16 h-full text-white text-sm font-medium rounded"
+            taskData.bgColor ?? "bg-red-500",
+            "flex-shrink-0 flex uppercase items-center justify-center w-16 h-full text-white text-sm font-medium rounded"
           )}
         >
-          {taskData.initials}
+          {taskData.title.slice(0, 2)}
         </div>
         <div className="flex-1 truncate px-4 py-2 text-sm">
           {taskData.title}
@@ -51,58 +51,11 @@ export const TaskItem = ({ taskData }: TaskItemProps) => {
             type="button"
             className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white bg-transparent text-gray-400 hover:text-gray-500"
           >
-            <span className="sr-only">Open options</span>
-            <EllipsisVerticalIcon className="h-5 w-5" aria-hidden="true" />
+            <EllipsisVerticalIcon className="h-5 w-5" />
           </button>
         </div>
       </div>
-    </Fragment>
-  );
-};
-
-/*function Example() {
-  return (
-    <div
-      className="space-y-2 p-2"
-      id={`div${task.id}`}
-      onDrop={(e) => drop(e)}
-      onDragOver={(e) => allowDrop(e)}
-    >
-      <div id={`drag${task.id}`} draggable="true" onDragStart={(e) => drag(e)}>
-        <Link
-          to={`${window.location.pathname}/task/${task.id}`}
-          className="block hover:bg-gray-50"
-          key={task.id}
-        >
-          <li key={task.id} className="col-span-1 flex rounded-md shadow-sm">
-            <div
-              className={classNames(
-                task.bgColor,
-                "flex-shrink-0 flex items-center justify-center w-16 text-white text-sm font-medium rounded-l-md"
-              )}
-            >
-              {task.initials}
-            </div>
-            <div className="flex flex-1 items-center justify-between truncate rounded-r-md border-t border-r border-b border-gray-200 bg-white">
-              <div className="flex-1 truncate px-4 py-2 text-sm">
-                <p className="font-medium text-gray-9000">{task.title}</p>
-              </div>
-              <div className="flex-shrink-0 pr-2">
-                <button
-                  type="button"
-                  className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white bg-transparent text-gray-400"
-                >
-                  <span className="sr-only">Open options</span>
-                  <EllipsisVerticalIcon
-                    className="h-5 w-5"
-                    aria-hidden="true"
-                  />
-                </button>
-              </div>
-            </div>
-          </li>
-        </Link>
-      </div>
+      <DragAndDrop taskData={taskData} />
     </div>
   );
-}*/
+};

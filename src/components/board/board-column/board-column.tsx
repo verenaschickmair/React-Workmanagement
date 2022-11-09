@@ -1,18 +1,29 @@
+import { useRecoilState } from "recoil";
+import { tasksState } from "../../../global-state/tasks-atom";
 import { TaskData } from "../../../interfaces/task-data";
 import { TaskItem } from "../task/task-item";
 
 type BoardColumnProps = {
   name: string;
-  tasks: TaskData[];
+  id: number;
 };
 
-export const BoardColumn = ({ name, tasks }: BoardColumnProps) => {
+function renderColumnTasks(tasks: TaskData[], columnId: number): TaskData[] {
+  return tasks.filter((task) => task.columnId === columnId);
+}
+
+export const BoardColumn = ({ name, id }: BoardColumnProps) => {
+  const [tasks] = useRecoilState(tasksState);
+
   return (
     <div>
       <h2 className="text-lg text-center mb-2">{name}</h2>
-      <div className="top-6 h-96 space-y-4 bg-gray-100 w-full">
+      <div
+        className="dropBox top-6 h-96 bg-gray-100 w-full"
+        id={"drop" + id.toString()}
+      >
         <ul className="grid grid-cols-1">
-          {tasks.map((task) => (
+          {renderColumnTasks(tasks, id).map((task) => (
             <TaskItem taskData={task} key={task.id} />
           ))}
         </ul>

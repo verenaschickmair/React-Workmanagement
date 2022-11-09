@@ -1,11 +1,17 @@
 import { Fragment } from "react";
-import { useRecoilState } from "recoil";
-import { teamMembersState } from "../../../global-state/team-member-atom";
+import { TeamMemberData } from "../../../interfaces/team-member-data";
 import { AddTeamMember } from "./add-team-member";
 import { EmptyTeamMembers } from "./empty-team-members";
 import { TeamMemberItem } from "./team-member-list-item";
-export const TeamMember = () => {
-  const [teamMembers] = useRecoilState(teamMembersState);
+
+type TeamMemberComponentProps = {
+  shouldShowAddTeamMembers?: boolean;
+  teamMembers: TeamMemberData[];
+};
+export const TeamMember = ({
+  shouldShowAddTeamMembers = true,
+  teamMembers,
+}: TeamMemberComponentProps) => {
   return (
     <Fragment>
       <div className="mx-auto max-w-md sm:max-w-3xl">
@@ -14,7 +20,7 @@ export const TeamMember = () => {
             Select or add team members
           </h2>
 
-          <AddTeamMember />
+          {shouldShowAddTeamMembers ? <AddTeamMember /> : null}
           {teamMembers.length > 0 ? null : <EmptyTeamMembers />}
         </div>
         <div className="mt-10">

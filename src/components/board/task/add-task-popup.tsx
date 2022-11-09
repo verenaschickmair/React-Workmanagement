@@ -1,45 +1,66 @@
 import { ChangeEvent, Fragment, useState } from "react";
 import { useRecoilState } from "recoil";
-import { taskState } from "../../../global-state/task-atom";
+import { selectedTeamMembersState } from "../../../global-state/selected-team-member-atom";
+import { tasksState } from "../../../global-state/tasks-atom";
+import { getCurrentDate } from "../../../interfaces/project-data";
+import { TeamMemberData } from "../../../interfaces/team-member-data";
 import { CustomButton } from "../../custom-ui-elements/button/button";
 import { CustomInputField } from "../../custom-ui-elements/input-field/custom-input-field";
 import { RadioButton } from "../../custom-ui-elements/radio-button/radio-button";
-import { AddTeamMember } from "../../project/team/add-team-member";
+import { CustomTextAreaField } from "../../custom-ui-elements/text-area-field/custom-text-area-field";
 import { TeamMember } from "../../project/team/team-member";
-import { TeamMemberItem } from "../../project/team/team-member-list-item";
 
 type AddTaskModalProps = {
   onSuccess: () => void;
+  teamMembers: TeamMemberData[];
 };
 
-export const AddTaskModal = ({ onSuccess }: AddTaskModalProps) => {
-  const [taskName, setTaskName] = useState<string>("");
-  const [taskColor, setTaskColor] = useState<string>("");
-  const [taskInitials, setTaskInitials] = useState<string>("");
-  const [tasks, setTasks] = useRecoilState(taskState);
+export const AddTaskModal = ({ onSuccess, teamMembers }: AddTaskModalProps) => {
+  const [taskTitle, setTaskTitle] = useState<string>("");
+  const [taskDescription, setTaskDescription] = useState<string>("");
+  const [taskBgColor, setTaskBgColor] = useState<string>("bg-red-500");
+  const [taskMembers] = useRecoilState(selectedTeamMembersState);
+  const [tasks, setTasks] = useRecoilState(tasksState);
 
   const onInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setTaskName(event.target.value);
-    setTaskInitials(setInitials());
-    setTaskColor(event.target.value);
+    setTaskTitle(event.target.value);
+  };
+
+  const onInputAreaChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
+    setTaskDescription(event.target.value);
+  };
+
+  const onRadioChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setTaskBgColor(event.target.value);
   };
 
   function isValid(): boolean {
-    if (!taskName || taskName.length < 3) {
+    if (!taskTitle || taskTitle.length < 3) {
       alert("Project name empty or too short");
       return false;
     }
     return true;
   }
 
-  function setInitials(): string {
-    return taskName.slice(0, 2);
-  }
-
   function onButtonCreateClick() {
     if (isValid()) {
-      //create Task
-      onSuccess();
+      if (taskMembers && taskMembers.length) {
+        setTasks(
+          tasks.concat({
+            ...tasks,
+            id: tasks.length + 1,
+            title: taskTitle,
+            description: taskDescription,
+            dateOfCreation: getCurrentDate("."),
+            members: taskMembers,
+            bgColor: taskBgColor,
+            columnId: 0,
+          })
+        );
+        onSuccess();
+      } else {
+        alert("Please select at least one team member!");
+      }
     }
   }
 
@@ -48,28 +69,57 @@ export const AddTaskModal = ({ onSuccess }: AddTaskModalProps) => {
       <h1 className="mt-2 text-xl font-medium text-gray-900">
         Create a new task
       </h1>
-      <form className="mt-6 text-left" action="#">
+      <form className="mt-6 text-left space-y-6" action="#">
         <CustomInputField
-          idTag="task-name"
+          idTag="task-title"
           type="text"
           onChange={onInputChange}
-          value={taskName}
+          value={taskTitle}
           placeholder="Enter the task name"
         />
 
-        <div className="sm:col-span-2 mt-8">
-          <div className="max-w-lg">
-            <p className="text-sm text-gray-500">Task Color</p>
-            <div className="mt-4 space-y-2">
-              <div className="flex items-center">
-                <RadioButton idTag={"1"} bgColor={"bg-color-green"} />
-              </div>
-            </div>
+        <div className="flex">
+          <CustomTextAreaField
+            idTag="task-description"
+            onChange={onInputAreaChange}
+            value={taskDescription}
+            placeholder="Enter the task description"
+            className="w-1/2"
+          />
+
+          <div className="w-1/3 ml-12">
+            <h2>Farbe auswählen:</h2>
+
+            <RadioButton
+              idTag="task-bgColor1"
+              name="bgColor"
+              bgColor={"bg-red-500"}
+              label="Rot"
+              defaultChecked
+              onChange={(event) => onRadioChange(event)}
+            />
+            <RadioButton
+              idTag="task-bgColor2"
+              name="bgColor"
+              bgColor={"bg-green-500"}
+              label="Grün"
+              onChange={(event) => onRadioChange(event)}
+            />
+            <RadioButton
+              idTag="task-bgColor3"
+              name="bgColor"
+              bgColor={"bg-blue-500"}
+              label="Blau"
+              onChange={(event) => onRadioChange(event)}
+            />
           </div>
         </div>
-      </form>
 
-      <TeamMemberItem person={{ id: 1, name: "Verena" }} />
+        <TeamMember
+          shouldShowAddTeamMembers={false}
+          teamMembers={teamMembers}
+        />
+      </form>
 
       <CustomButton
         onClick={onButtonCreateClick}
