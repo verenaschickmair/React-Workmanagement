@@ -22,6 +22,9 @@ import {
 } from "@heroicons/react/20/solid";
 import { TaskData } from "../../../../interfaces/task-data";
 import {AssigneeItem} from "../../../custom-ui-elements/list-items/assignee-item";
+import {AddTaskModal} from "../add-task-popup";
+import {Popup} from "../../../popup/popup";
+import {EditTaskModal} from "../edit-task-popup";
 
 const projects = [
   { id: 1, name: "GraphQL API", href: "#" },
@@ -81,14 +84,28 @@ type TaskDetailProps = {
 
 export const TaskDetail = ({ taskData, onSuccess }: TaskDetailProps) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [showEditTaskView, setShowEditTaskView] = useState(false);
 
-  function onButtonCloseClick() {
-    console.log("edit Ticket");
+  function onButtonEditClick() {
+    setShowEditTaskView(true);
+  }
+
+  function onPopupClose() {
+    setShowEditTaskView(false);
+  }
+
+  function onPopupCancel() {
+    setShowEditTaskView(false);
     onSuccess();
   }
 
   return (
     <div className="flex min-h-full">
+      <div className="text-center">
+        <Popup trigger={showEditTaskView} onCloseClick={onPopupCancel}>
+          <EditTaskModal onSuccess={onPopupClose} taskData={taskData} />
+        </Popup>
+      </div>
       <Transition.Root show={sidebarOpen} as={Fragment}>
         <Dialog
           as="div"
@@ -205,7 +222,7 @@ export const TaskDetail = ({ taskData, onSuccess }: TaskDetailProps) => {
                                 <button
                                   type="button"
                                   className="inline-flex justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2"
-                                  onClick={onButtonCloseClick}
+                                  onClick={onButtonEditClick}
                                 >
                                   <PencilIcon
                                     className="-ml-1 mr-2 h-5 w-5 text-blue-500"
