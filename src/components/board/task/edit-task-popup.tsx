@@ -2,14 +2,12 @@ import { ChangeEvent, Fragment, useState } from "react";
 import { useRecoilState } from "recoil";
 import { selectedTeamMembersState } from "../../../global-state/selected-team-member-atom";
 import { tasksState } from "../../../global-state/tasks-atom";
-import { getCurrentDate } from "../../../interfaces/project-data";
-import { TeamMemberData } from "../../../interfaces/team-member-data";
+import { TaskData } from "../../../interfaces/task-data";
 import { CustomButton } from "../../custom-ui-elements/button/button";
 import { CustomInputField } from "../../custom-ui-elements/input-field/custom-input-field";
 import { RadioButton } from "../../custom-ui-elements/radio-button/radio-button";
 import { CustomTextAreaField } from "../../custom-ui-elements/text-area-field/custom-text-area-field";
 import { TeamMember } from "../../project/team/team-member";
-import {TaskData} from "../../../interfaces/task-data";
 
 type EditTaskModalProps = {
   onSuccess: () => void;
@@ -46,18 +44,22 @@ export const EditTaskModal = ({ onSuccess, taskData }: EditTaskModalProps) => {
   function onButtonSaveClick() {
     if (isValid()) {
       if (taskMembers && taskMembers.length) {
-          const editData = tasks.map((item, i, ...tasks) => { if(item.id==taskData.id){
-              item.bgColor=taskBgColor
-              item.title= taskTitle
-              item.description= taskDescription
-              item.members= taskMembers
-              return item
-          } else {
-              return item
-          }})
-          console.log(editData)
+        const editedItems = tasks.map( item =>{
+            if(item.id==taskData.id){
+                return {
+                  id:item.id,
+                  bgColor: taskBgColor,
+                  title: taskTitle,
+                  description: taskDescription,
+                  members: taskMembers,
+                  columnId: item.columnId,
+                  dateOfCreation: item.dateOfCreation
+                }
+            }
+            return item 
+        })
         setTasks(
-          editData
+          editedItems
         );
         onSuccess();
       } else {
@@ -122,6 +124,7 @@ export const EditTaskModal = ({ onSuccess, taskData }: EditTaskModalProps) => {
         <TeamMember
           shouldShowAddTeamMembers={false}
           teamMembers={taskData.members}
+          preselectTeamMembers={true}
         />
       </form>
 
