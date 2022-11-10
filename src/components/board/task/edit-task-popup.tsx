@@ -8,6 +8,8 @@ import { CustomInputField } from "../../custom-ui-elements/input-field/custom-in
 import { RadioButton } from "../../custom-ui-elements/radio-button/radio-button";
 import { CustomTextAreaField } from "../../custom-ui-elements/text-area-field/custom-text-area-field";
 import { TeamMember } from "../../project/team/team-member";
+import {useLocation} from "react-router-dom";
+import {ProjectData} from "../../../interfaces/project-data";
 
 type EditTaskModalProps = {
   onSuccess: () => void;
@@ -18,8 +20,15 @@ export const EditTaskModal = ({ onSuccess, taskData }: EditTaskModalProps) => {
   const [taskTitle, setTaskTitle] = useState<string>(taskData.title);
   const [taskDescription, setTaskDescription] = useState<string>(taskData.description);
   const [taskBgColor, setTaskBgColor] = useState<string>(taskData.bgColor ? taskData.bgColor : "bg-red-500");
-  const [taskMembers] = useRecoilState(selectedTeamMembersState);
+  const [taskMembers, setTaskMembers] = useRecoilState(selectedTeamMembersState);
   const [tasks, setTasks] = useRecoilState(tasksState);
+
+  const location = useLocation();
+  const project: ProjectData = location.state.project;
+
+  if(taskMembers.length === 0){
+    setTaskMembers(taskData.members);
+  };
 
   const onInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     setTaskTitle(event.target.value);
@@ -56,7 +65,7 @@ export const EditTaskModal = ({ onSuccess, taskData }: EditTaskModalProps) => {
                   dateOfCreation: item.dateOfCreation
                 }
             }
-            return item 
+            return item
         })
         setTasks(
           editedItems
@@ -123,8 +132,8 @@ export const EditTaskModal = ({ onSuccess, taskData }: EditTaskModalProps) => {
 
         <TeamMember
           shouldShowAddTeamMembers={false}
-          teamMembers={taskData.members}
-          preselectTeamMembers={true}
+          teamMembers={project.teamMembers}
+          preselectTeamMembers={taskData.members}
         />
       </form>
 

@@ -25,6 +25,8 @@ import {AssigneeItem} from "../../../custom-ui-elements/list-items/assignee-item
 import {AddTaskModal} from "../add-task-popup";
 import {Popup} from "../../../popup/popup";
 import {EditTaskModal} from "../edit-task-popup";
+import {useRecoilState} from "recoil";
+import {selectedTeamMembersState} from "../../../../global-state/selected-team-member-atom";
 
 const projects = [
   { id: 1, name: "GraphQL API", href: "#" },
@@ -85,6 +87,9 @@ type TaskDetailProps = {
 export const TaskDetail = ({ taskData, onSuccess }: TaskDetailProps) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showEditTaskView, setShowEditTaskView] = useState(false);
+  const [selectedTeamMembers, setSelectedTeamMembers] = useRecoilState(
+      selectedTeamMembersState
+  );
 
   function onButtonEditClick() {
     setShowEditTaskView(true);
@@ -92,10 +97,12 @@ export const TaskDetail = ({ taskData, onSuccess }: TaskDetailProps) => {
 
   function onPopupClose() {
     setShowEditTaskView(false);
+    setSelectedTeamMembers([]);
   }
 
   function onPopupCancel() {
     setShowEditTaskView(false);
+    setSelectedTeamMembers([]);
     onSuccess();
   }
 

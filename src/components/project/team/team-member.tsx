@@ -7,12 +7,12 @@ import { TeamMemberItem } from "./team-member-list-item";
 type TeamMemberComponentProps = {
   shouldShowAddTeamMembers?: boolean;
   teamMembers: TeamMemberData[];
-  preselectTeamMembers?: boolean
+  preselectTeamMembers?: TeamMemberData[];
 };
 export const TeamMember = ({
   shouldShowAddTeamMembers = true,
   teamMembers,
-  preselectTeamMembers = false
+  preselectTeamMembers,
 }: TeamMemberComponentProps) => {
   return (
     <Fragment>
@@ -32,7 +32,7 @@ export const TeamMember = ({
           >
             {teamMembers.map((person) => (
               <li key={person.id}>
-                <TeamMemberItem person={person}  isSelected={preselectTeamMembers}/>
+                <TeamMemberItem person={person}  isSelected={preselectTeamMembers?.some(member => member.id === person.id)}/>
               </li>
             ))}
           </ul>
