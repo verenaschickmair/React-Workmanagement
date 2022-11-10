@@ -46,17 +46,18 @@ export const EditTaskModal = ({ onSuccess, taskData }: EditTaskModalProps) => {
   function onButtonSaveClick() {
     if (isValid()) {
       if (taskMembers && taskMembers.length) {
+          const editData = tasks.map((item, i, ...tasks) => { if(item.id==taskData.id){
+              item.bgColor=taskBgColor
+              item.title= taskTitle
+              item.description= taskDescription
+              item.members= taskMembers
+              return item
+          } else {
+              return item
+          }})
+          console.log(editData)
         setTasks(
-          tasks.concat({
-            ...tasks,
-            id: tasks.length + 1,
-            title: taskTitle,
-            description: taskDescription,
-            dateOfCreation: getCurrentDate("."),
-            members: taskMembers,
-            bgColor: taskBgColor,
-            columnId: 0,
-          })
+          editData
         );
         onSuccess();
       } else {
