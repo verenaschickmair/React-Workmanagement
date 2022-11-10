@@ -14,6 +14,11 @@ import {
   CalendarIcon,
   ChatBubbleLeftEllipsisIcon,
   CheckCircleIcon,
+  CircleStackIcon,
+  ClipboardDocumentCheckIcon,
+  CodeBracketIcon, ComputerDesktopIcon,
+  EllipsisHorizontalCircleIcon,
+  EllipsisHorizontalIcon, HandThumbUpIcon,
   LockOpenIcon,
   MagnifyingGlassIcon,
   PencilIcon,
@@ -21,7 +26,12 @@ import {
   UserCircleIcon as UserCircleIconMini,
 } from "@heroicons/react/20/solid";
 import { TaskData } from "../../../../interfaces/task-data";
-import { getCurrentDate } from "../../../../interfaces/project-data";
+import {AssigneeItem} from "../../../custom-ui-elements/list-items/assignee-item";
+import {AddTaskModal} from "../add-task-popup";
+import {Popup} from "../../../popup/popup";
+import {EditTaskModal} from "../edit-task-popup";
+import {useRecoilState} from "recoil";
+import {selectedTeamMembersState} from "../../../../global-state/selected-team-member-atom";
 
 const projects = [
   { id: 1, name: "GraphQL API", href: "#" },
@@ -81,14 +91,103 @@ type TaskDetailProps = {
 
 export const TaskDetail = ({ taskData, onSuccess }: TaskDetailProps) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [showEditTaskView, setShowEditTaskView] = useState(false);
+  const [selectedTeamMembers, setSelectedTeamMembers] = useRecoilState(
+      selectedTeamMembersState
+  );
 
-  function onButtonCloseClick() {
-    console.log("Ticket closed");
+  function onButtonEditClick() {
+    setShowEditTaskView(true);
+  }
+
+  function onPopupClose() {
+    setShowEditTaskView(false);
+    setSelectedTeamMembers([]);
+  }
+
+  function onPopupCancel() {
+    setShowEditTaskView(false);
+    setSelectedTeamMembers([]);
     onSuccess();
+  }
+
+  function taskStatus() {
+    switch (taskData.columnId) {
+      case 0:
+        return (
+          <div className="flex items-center space-x-2">
+            <CircleStackIcon
+                className="h-5 w-5 text-gray-500"
+                aria-hidden="true"
+            />
+            <span className="text-sm font-medium text-gray-700">
+                    Backlog
+            </span>
+          </div>
+        );
+        break;
+      case 1:
+        return (
+            <div className="flex items-center space-x-2">
+              <ClipboardDocumentCheckIcon
+                  className="h-5 w-5 text-cyan-500"
+                  aria-hidden="true"
+              />
+              <span className="text-sm font-medium text-cyan-700">
+                    Todo
+            </span>
+            </div>
+        );
+        break;
+      case 2:
+        return (
+            <div className="flex items-center space-x-2">
+              <CodeBracketIcon
+                  className="h-5 w-5 text-blue-500"
+                  aria-hidden="true"
+              />
+              <span className="text-sm font-medium text-blue-500">
+                    In Progress
+            </span>
+            </div>
+        );
+        break;
+      case 3:
+        return (
+            <div className="flex items-center space-x-2">
+              <ComputerDesktopIcon
+                  className="h-5 w-5 text-orange-500"
+                  aria-hidden="true"
+              />
+              <span className="text-sm font-medium text-orange-700">
+                    Review
+            </span>
+            </div>
+        );
+        break;
+      case 4:
+        return (
+            <div className="flex items-center space-x-2">
+              <HandThumbUpIcon
+                  className="h-5 w-5 text-green-500"
+                  aria-hidden="true"
+              />
+              <span className="text-sm font-medium text-green-700">
+                    Done
+            </span>
+            </div>
+        );
+        break;
+    }
   }
 
   return (
     <div className="flex min-h-full">
+      <div className="text-center">
+        <Popup trigger={showEditTaskView} onCloseClick={onPopupCancel}>
+          <EditTaskModal onSuccess={onPopupClose} taskData={taskData} />
+        </Popup>
+      </div>
       <Transition.Root show={sidebarOpen} as={Fragment}>
         <Dialog
           as="div"
@@ -169,123 +268,14 @@ export const TaskDetail = ({ taskData, onSuccess }: TaskDetailProps) => {
                         {taskData.title}
                       </h1>
                       <p className="mt-2 text-sm text-gray-500">
-                        #400 opened by{" "}
-                        <a href="#" className="font-medium text-gray-900">
-                          Hilary Mahy
-                        </a>{" "}
-                        in{" "}
-                        <a href="#" className="font-medium text-gray-900">
-                          Customer Portal
-                        </a>
+                        #{taskData.id}
                       </p>
                     </div>
                   </div>
-                  <aside className="mt-8 xl:hidden">
-                    <h2 className="sr-only">Details</h2>
-                    <div className="space-y-5">
-                      <div className="flex items-center space-x-2">
-                        <LockOpenIcon
-                          className="h-5 w-5 text-green-500"
-                          aria-hidden="true"
-                        />
-                        <span className="text-sm font-medium text-green-700">
-                          Open Issue
-                        </span>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <CalendarIcon
-                          className="h-5 w-5 text-gray-400"
-                          aria-hidden="true"
-                        />
-                        <span className="text-sm font-medium text-gray-900">
-                          Created on{" "}
-                          <time dateTime="2020-12-02">Dec 2, 2020</time>
-                        </span>
-                      </div>
-                    </div>
-                    <div className="mt-6 space-y-8 border-t border-b border-gray-200 py-6">
-                      <div>
-                        <h2 className="text-sm font-medium text-gray-500">
-                          Assignees
-                        </h2>
-                        <ul role="list" className="mt-3 space-y-3">
-                          <li className="flex justify-start">
-                            <a href="#" className="flex items-center space-x-3">
-                              <div className="flex-shrink-0">
-                                <img
-                                  className="h-5 w-5 rounded-full"
-                                  src="https://images.unsplash.com/photo-1520785643438-5bf77931f493?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=256&h=256&q=80"
-                                  alt=""
-                                />
-                              </div>
-                              <div className="text-sm font-medium text-gray-900">
-                                {taskData.members.length}
-                              </div>
-                            </a>
-                          </li>
-                        </ul>
-                      </div>
-                      <div>
-                        <h2 className="text-sm font-medium text-gray-500">
-                          Tags
-                        </h2>
-                        <ul role="list" className="mt-2 leading-8">
-                          <li className="inline">
-                            <a
-                              href="#"
-                              className="relative inline-flex items-center rounded-full border border-gray-300 px-3 py-0.5"
-                            >
-                              <div className="absolute flex flex-shrink-0 items-center justify-center">
-                                <span
-                                  className="h-1.5 w-1.5 rounded-full bg-rose-500"
-                                  aria-hidden="true"
-                                />
-                              </div>
-                              <div className="ml-3.5 text-sm font-medium text-gray-900">
-                                Bug
-                              </div>
-                            </a>{" "}
-                          </li>
-                          <li className="inline">
-                            <a
-                              href="#"
-                              className="relative inline-flex items-center rounded-full border border-gray-300 px-3 py-0.5"
-                            >
-                              <div className="absolute flex flex-shrink-0 items-center justify-center">
-                                <span
-                                  className="h-1.5 w-1.5 rounded-full bg-indigo-500"
-                                  aria-hidden="true"
-                                />
-                              </div>
-                              <div className="ml-3.5 text-sm font-medium text-gray-900">
-                                Accessibility
-                              </div>
-                            </a>{" "}
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </aside>
                   <div className="py-3 xl:pt-6 xl:pb-0">
                     <h2 className="sr-only">Description</h2>
                     <div className="prose max-w-none">
                       <p>{taskData.description}</p>
-                      <ul role="list">
-                        <li>
-                          Tempor ultrices proin nunc fames nunc ut auctor vitae
-                          sed. Eget massa parturient vulputate fermentum id
-                          facilisis nam pharetra. Aliquet leo tellus.
-                        </li>
-                        <li>
-                          Turpis ac nunc adipiscing adipiscing metus tincidunt
-                          senectus tellus.
-                        </li>
-                        <li>
-                          Semper interdum porta sit tincidunt. Dui suspendisse
-                          scelerisque amet metus eget sed. Ut tellus in sed
-                          dignissim.
-                        </li>
-                      </ul>
                     </div>
                   </div>
                 </div>
@@ -307,13 +297,13 @@ export const TaskDetail = ({ taskData, onSuccess }: TaskDetailProps) => {
                                 <button
                                   type="button"
                                   className="inline-flex justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2"
-                                  onClick={onButtonCloseClick}
+                                  onClick={onButtonEditClick}
                                 >
-                                  <CheckCircleIcon
-                                    className="-ml-1 mr-2 h-5 w-5 text-green-500"
+                                  <PencilIcon
+                                    className="-ml-1 mr-2 h-5 w-5 text-blue-500"
                                     aria-hidden="true"
                                   />
-                                  <span>Close issue</span>
+                                  <span>Edit issue</span>
                                 </button>
                               </div>
                             </form>
@@ -328,15 +318,7 @@ export const TaskDetail = ({ taskData, onSuccess }: TaskDetailProps) => {
             <aside className="hidden xl:block xl:pl-8">
               <h2 className="sr-only">Details</h2>
               <div className="space-y-5">
-                <div className="flex items-center space-x-2">
-                  <LockOpenIcon
-                    className="h-5 w-5 text-green-500"
-                    aria-hidden="true"
-                  />
-                  <span className="text-sm font-medium text-green-700">
-                    Open Issue
-                  </span>
-                </div>
+                {taskStatus()}
                 <div className="flex items-center space-x-2">
                   <CalendarIcon
                     className="h-5 w-5 text-gray-400"
@@ -352,59 +334,15 @@ export const TaskDetail = ({ taskData, onSuccess }: TaskDetailProps) => {
                   <h2 className="text-sm font-medium text-gray-500">
                     Assignees
                   </h2>
-                  <ul role="list" className="mt-3 space-y-3">
-                    <li className="flex justify-start">
-                      <a href="#" className="flex items-center space-x-3">
-                        <div className="flex-shrink-0">
-                          <img
-                            className="h-5 w-5 rounded-full"
-                            src="https://images.unsplash.com/photo-1520785643438-5bf77931f493?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=256&h=256&q=80"
-                            alt=""
-                          />
-                        </div>
-                        <div className="text-sm font-medium text-gray-900">
-                          Eduardo Benz
-                        </div>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-                <div>
-                  <h2 className="text-sm font-medium text-gray-500">Tags</h2>
-                  <ul role="list" className="mt-2 leading-8">
-                    <li className="inline">
-                      <a
-                        href="#"
-                        className="relative inline-flex items-center rounded-full border border-gray-300 px-3 py-0.5"
-                      >
-                        <div className="absolute flex flex-shrink-0 items-center justify-center">
-                          <span
-                            className="h-1.5 w-1.5 rounded-full bg-rose-500"
-                            aria-hidden="true"
-                          />
-                        </div>
-                        <div className="ml-3.5 text-sm font-medium text-gray-900">
-                          Bug
-                        </div>
-                      </a>{" "}
-                    </li>
-                    <li className="inline">
-                      <a
-                        href="#"
-                        className="relative inline-flex items-center rounded-full border border-gray-300 px-3 py-0.5"
-                      >
-                        <div className="absolute flex flex-shrink-0 items-center justify-center">
-                          <span
-                            className="h-1.5 w-1.5 rounded-full bg-indigo-500"
-                            aria-hidden="true"
-                          />
-                        </div>
-                        <div className="ml-3.5 text-sm font-medium text-gray-900">
-                          Accessibility
-                        </div>
-                      </a>{" "}
-                    </li>
-                  </ul>
+                  <div className="mx-auto max-w-md sm:max-w-3xl">
+                      <ul role="list" className="mt-3 space-y-3">
+                        {taskData.members.map((person) => (
+                            <li key={person.id}>
+                              <AssigneeItem person={person} />
+                            </li>
+                        ))}
+                      </ul>
+                  </div>
                 </div>
               </div>
             </aside>
