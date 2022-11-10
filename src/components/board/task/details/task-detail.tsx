@@ -14,6 +14,11 @@ import {
   CalendarIcon,
   ChatBubbleLeftEllipsisIcon,
   CheckCircleIcon,
+  CircleStackIcon,
+  ClipboardDocumentCheckIcon,
+  CodeBracketIcon, ComputerDesktopIcon,
+  EllipsisHorizontalCircleIcon,
+  EllipsisHorizontalIcon, HandThumbUpIcon,
   LockOpenIcon,
   MagnifyingGlassIcon,
   PencilIcon,
@@ -106,6 +111,76 @@ export const TaskDetail = ({ taskData, onSuccess }: TaskDetailProps) => {
     onSuccess();
   }
 
+  function taskStatus() {
+    switch (taskData.columnId) {
+      case 0:
+        return (
+          <div className="flex items-center space-x-2">
+            <CircleStackIcon
+                className="h-5 w-5 text-gray-500"
+                aria-hidden="true"
+            />
+            <span className="text-sm font-medium text-gray-700">
+                    Backlog
+            </span>
+          </div>
+        );
+        break;
+      case 1:
+        return (
+            <div className="flex items-center space-x-2">
+              <ClipboardDocumentCheckIcon
+                  className="h-5 w-5 text-cyan-500"
+                  aria-hidden="true"
+              />
+              <span className="text-sm font-medium text-cyan-700">
+                    Todo
+            </span>
+            </div>
+        );
+        break;
+      case 2:
+        return (
+            <div className="flex items-center space-x-2">
+              <CodeBracketIcon
+                  className="h-5 w-5 text-blue-500"
+                  aria-hidden="true"
+              />
+              <span className="text-sm font-medium text-blue-500">
+                    In Progress
+            </span>
+            </div>
+        );
+        break;
+      case 3:
+        return (
+            <div className="flex items-center space-x-2">
+              <ComputerDesktopIcon
+                  className="h-5 w-5 text-orange-500"
+                  aria-hidden="true"
+              />
+              <span className="text-sm font-medium text-orange-700">
+                    Review
+            </span>
+            </div>
+        );
+        break;
+      case 4:
+        return (
+            <div className="flex items-center space-x-2">
+              <HandThumbUpIcon
+                  className="h-5 w-5 text-green-500"
+                  aria-hidden="true"
+              />
+              <span className="text-sm font-medium text-green-700">
+                    Done
+            </span>
+            </div>
+        );
+        break;
+    }
+  }
+
   return (
     <div className="flex min-h-full">
       <div className="text-center">
@@ -193,14 +268,7 @@ export const TaskDetail = ({ taskData, onSuccess }: TaskDetailProps) => {
                         {taskData.title}
                       </h1>
                       <p className="mt-2 text-sm text-gray-500">
-                        #{taskData.id} opened by{" "}
-                        <a href="#" className="font-medium text-gray-900">
-                          Hilary Mahy
-                        </a>{" "}
-                        in{" "}
-                        <a href="#" className="font-medium text-gray-900">
-                          Customer Portal
-                        </a>
+                        #{taskData.id}
                       </p>
                     </div>
                   </div>
@@ -250,15 +318,7 @@ export const TaskDetail = ({ taskData, onSuccess }: TaskDetailProps) => {
             <aside className="hidden xl:block xl:pl-8">
               <h2 className="sr-only">Details</h2>
               <div className="space-y-5">
-                <div className="flex items-center space-x-2">
-                  <LockOpenIcon
-                    className="h-5 w-5 text-green-500"
-                    aria-hidden="true"
-                  />
-                  <span className="text-sm font-medium text-green-700">
-                    Open Issue
-                  </span>
-                </div>
+                {taskStatus()}
                 <div className="flex items-center space-x-2">
                   <CalendarIcon
                     className="h-5 w-5 text-gray-400"
