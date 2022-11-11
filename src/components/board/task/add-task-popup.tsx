@@ -13,9 +13,14 @@ import { TeamMember } from "../../project/team/team-member";
 type AddTaskModalProps = {
   onSuccess: () => void;
   teamMembers: TeamMemberData[];
+  projectId: number;
 };
 
-export const AddTaskModal = ({ onSuccess, teamMembers }: AddTaskModalProps) => {
+export const AddTaskModal = ({
+  onSuccess,
+  teamMembers,
+  projectId,
+}: AddTaskModalProps) => {
   const [taskTitle, setTaskTitle] = useState<string>("");
   const [taskDescription, setTaskDescription] = useState<string>("");
   const [taskBgColor, setTaskBgColor] = useState<string>("bg-red-500");
@@ -55,6 +60,7 @@ export const AddTaskModal = ({ onSuccess, teamMembers }: AddTaskModalProps) => {
             members: taskMembers,
             bgColor: taskBgColor,
             columnId: 0,
+            projectId: projectId,
           })
         );
         onSuccess();

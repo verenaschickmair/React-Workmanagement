@@ -1,15 +1,15 @@
 import { ChangeEvent, Fragment, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { selectedTeamMembersState } from "../../../global-state/selected-team-member-atom";
 import { tasksState } from "../../../global-state/tasks-atom";
+import { ProjectData } from "../../../interfaces/project-data";
 import { TaskData } from "../../../interfaces/task-data";
 import { CustomButton } from "../../custom-ui-elements/button/button";
 import { CustomInputField } from "../../custom-ui-elements/input-field/custom-input-field";
 import { RadioButton } from "../../custom-ui-elements/radio-button/radio-button";
 import { CustomTextAreaField } from "../../custom-ui-elements/text-area-field/custom-text-area-field";
 import { TeamMember } from "../../project/team/team-member";
-import {useLocation} from "react-router-dom";
-import {ProjectData} from "../../../interfaces/project-data";
 
 type EditTaskModalProps = {
   onSuccess: () => void;
@@ -18,17 +18,23 @@ type EditTaskModalProps = {
 
 export const EditTaskModal = ({ onSuccess, taskData }: EditTaskModalProps) => {
   const [taskTitle, setTaskTitle] = useState<string>(taskData.title);
-  const [taskDescription, setTaskDescription] = useState<string>(taskData.description);
-  const [taskBgColor, setTaskBgColor] = useState<string>(taskData.bgColor ? taskData.bgColor : "bg-red-500");
-  const [taskMembers, setTaskMembers] = useRecoilState(selectedTeamMembersState);
+  const [taskDescription, setTaskDescription] = useState<string>(
+    taskData.description
+  );
+  const [taskBgColor, setTaskBgColor] = useState<string>(
+    taskData.bgColor ? taskData.bgColor : "bg-red-500"
+  );
+  const [taskMembers, setTaskMembers] = useRecoilState(
+    selectedTeamMembersState
+  );
   const [tasks, setTasks] = useRecoilState(tasksState);
 
   const location = useLocation();
   const project: ProjectData = location.state.project;
 
-  if(taskMembers.length === 0){
+  if (taskMembers.length === 0) {
     setTaskMembers(taskData.members);
-  };
+  }
 
   const onInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     setTaskTitle(event.target.value);
@@ -53,23 +59,22 @@ export const EditTaskModal = ({ onSuccess, taskData }: EditTaskModalProps) => {
   function onButtonSaveClick() {
     if (isValid()) {
       if (taskMembers && taskMembers.length) {
-        const editedItems = tasks.map( item =>{
-            if(item.id==taskData.id){
-                return {
-                  id:item.id,
-                  bgColor: taskBgColor,
-                  title: taskTitle,
-                  description: taskDescription,
-                  members: taskMembers,
-                  columnId: item.columnId,
-                  dateOfCreation: item.dateOfCreation
-                }
-            }
-            return item
-        })
-        setTasks(
-          editedItems
-        );
+        const editedItems = tasks.map((task) => {
+          if (task.id === taskData.id) {
+            return {
+              id: task.id,
+              bgColor: taskBgColor,
+              title: taskTitle,
+              description: taskDescription,
+              members: taskMembers,
+              columnId: task.columnId,
+              dateOfCreation: task.dateOfCreation,
+              projectId: task.projectId,
+            };
+          }
+          return task;
+        });
+        setTasks(editedItems);
         onSuccess();
       } else {
         alert("Please select at least one team member!");
@@ -79,9 +84,7 @@ export const EditTaskModal = ({ onSuccess, taskData }: EditTaskModalProps) => {
 
   return (
     <Fragment>
-      <h1 className="mt-2 text-xl font-medium text-gray-900">
-        Edit task
-      </h1>
+      <h1 className="mt-2 text-xl font-medium text-gray-900">Edit task</h1>
       <form className="mt-6 text-left space-y-6" action="#">
         <CustomInputField
           idTag="task-title"

@@ -2,23 +2,18 @@ import { CalendarIcon, UsersIcon } from "@heroicons/react/24/outline";
 import { Fragment } from "react";
 import { Link } from "react-router-dom";
 import { ProjectData } from "../../interfaces/project-data";
-import { TaskData } from "../../interfaces/task-data";
 
 type ProjectListItemProps = {
   projectData: ProjectData;
-  tasks: TaskData[];
 };
 
-export const ProjectListItem = ({
-  projectData,
-  tasks,
-}: ProjectListItemProps) => {
+export const ProjectListItem = ({ projectData }: ProjectListItemProps) => {
   return (
     <Fragment>
       <Link
         to={`/projects/${projectData.id}`}
         className="block hover:bg-gray-50"
-        state={{ project: projectData, tasks: tasks }}
+        state={{ project: projectData }}
       >
         <div className="px-4 py-4 sm:px-6">
           <div className="flex items-center justify-between">

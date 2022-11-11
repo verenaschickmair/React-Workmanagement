@@ -1,8 +1,4 @@
-import { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import {
-  XMarkIcon,
-} from "@heroicons/react/24/outline";
 import {
   CalendarIcon,
   CircleStackIcon,
@@ -12,13 +8,14 @@ import {
   HandThumbUpIcon,
   PencilIcon,
 } from "@heroicons/react/20/solid";
+import { XMarkIcon } from "@heroicons/react/24/outline";
+import { Fragment, useState } from "react";
+import { useRecoilState } from "recoil";
+import { selectedTeamMembersState } from "../../../../global-state/selected-team-member-atom";
 import { TaskData } from "../../../../interfaces/task-data";
-import {AssigneeItem} from "../../../custom-ui-elements/list-items/assignee-item";
-import {Popup} from "../../../popup/popup";
-import {EditTaskModal} from "../edit-task-popup";
-import {useRecoilState} from "recoil";
-import {selectedTeamMembersState} from "../../../../global-state/selected-team-member-atom";
-
+import { AssigneeItem } from "../../../custom-ui-elements/list-items/assignee-item";
+import { Popup } from "../../../popup/popup";
+import { EditTaskModal } from "../edit-task-popup";
 
 type TaskDetailProps = {
   taskData: TaskData;
@@ -29,7 +26,7 @@ export const TaskDetail = ({ taskData, onSuccess }: TaskDetailProps) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showEditTaskView, setShowEditTaskView] = useState(false);
   const [selectedTeamMembers, setSelectedTeamMembers] = useRecoilState(
-      selectedTeamMembersState
+    selectedTeamMembersState
   );
 
   function onButtonEditClick() {
@@ -53,67 +50,54 @@ export const TaskDetail = ({ taskData, onSuccess }: TaskDetailProps) => {
         return (
           <div className="flex items-center space-x-2">
             <CircleStackIcon
-                className="h-5 w-5 text-gray-500"
-                aria-hidden="true"
+              className="h-5 w-5 text-gray-500"
+              aria-hidden="true"
             />
-            <span className="text-sm font-medium text-gray-700">
-                    Backlog
+            <span className="text-sm font-medium text-gray-700">Backlog</span>
+          </div>
+        );
+      case 1:
+        return (
+          <div className="flex items-center space-x-2">
+            <ClipboardDocumentCheckIcon
+              className="h-5 w-5 text-cyan-500"
+              aria-hidden="true"
+            />
+            <span className="text-sm font-medium text-cyan-700">Todo</span>
+          </div>
+        );
+      case 2:
+        return (
+          <div className="flex items-center space-x-2">
+            <CodeBracketIcon
+              className="h-5 w-5 text-blue-500"
+              aria-hidden="true"
+            />
+            <span className="text-sm font-medium text-blue-500">
+              In Progress
             </span>
           </div>
         );
-        break;
-      case 1:
-        return (
-            <div className="flex items-center space-x-2">
-              <ClipboardDocumentCheckIcon
-                  className="h-5 w-5 text-cyan-500"
-                  aria-hidden="true"
-              />
-              <span className="text-sm font-medium text-cyan-700">
-                    Todo
-            </span>
-            </div>
-        );
-        break;
-      case 2:
-        return (
-            <div className="flex items-center space-x-2">
-              <CodeBracketIcon
-                  className="h-5 w-5 text-blue-500"
-                  aria-hidden="true"
-              />
-              <span className="text-sm font-medium text-blue-500">
-                    In Progress
-            </span>
-            </div>
-        );
-        break;
       case 3:
         return (
-            <div className="flex items-center space-x-2">
-              <ComputerDesktopIcon
-                  className="h-5 w-5 text-orange-500"
-                  aria-hidden="true"
-              />
-              <span className="text-sm font-medium text-orange-700">
-                    Review
-            </span>
-            </div>
+          <div className="flex items-center space-x-2">
+            <ComputerDesktopIcon
+              className="h-5 w-5 text-orange-500"
+              aria-hidden="true"
+            />
+            <span className="text-sm font-medium text-orange-700">Review</span>
+          </div>
         );
-        break;
       case 4:
         return (
-            <div className="flex items-center space-x-2">
-              <HandThumbUpIcon
-                  className="h-5 w-5 text-green-500"
-                  aria-hidden="true"
-              />
-              <span className="text-sm font-medium text-green-700">
-                    Done
-            </span>
-            </div>
+          <div className="flex items-center space-x-2">
+            <HandThumbUpIcon
+              className="h-5 w-5 text-green-500"
+              aria-hidden="true"
+            />
+            <span className="text-sm font-medium text-green-700">Done</span>
+          </div>
         );
-        break;
     }
   }
 
@@ -192,100 +176,89 @@ export const TaskDetail = ({ taskData, onSuccess }: TaskDetailProps) => {
         </Dialog>
       </Transition.Root>
 
-      <main className="flex-1">
-        <div className="py-8 xl:py-10">
-          <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 xl:grid xl:max-w-5xl xl:grid-cols-3">
-            <div className="xl:col-span-2 xl:border-r xl:border-gray-200 xl:pr-8">
+      <main className="flex-1 py-8 xl:py-10">
+        <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 xl:grid xl:max-w-5xl xl:grid-cols-3">
+          <div className="xl:col-span-2 xl:border-r xl:border-gray-200 xl:pr-8">
+            <div>
               <div>
-                <div>
-                  <div className="md:flex md:items-center md:justify-between md:space-x-4 xl:border-b xl:pb-6">
-                    <div>
-                      <h1 className="text-2xl font-bold text-gray-900">
-                        {taskData.title}
-                      </h1>
-                      <p className="mt-2 text-sm text-gray-500">
-                        #{taskData.id}
-                      </p>
-                    </div>
+                <div className="md:flex md:items-center md:justify-between md:space-x-4 xl:border-b xl:pb-6">
+                  <div>
+                    <h1 className="text-2xl font-bold text-gray-900">
+                      {taskData.title}
+                    </h1>
+                    <p className="mt-2 text-sm text-gray-500">#{taskData.id}</p>
                   </div>
-                  <div className="py-3 xl:pt-6 xl:pb-0">
-                    <h2 className="sr-only">Description</h2>
-                    <div className="prose max-w-none">
-                      <h4>
-                        Description
-                      </h4>
-                      <p>{taskData.description}</p>
-                    </div>
+                </div>
+                <div className="py-3 xl:pt-6 xl:pb-0">
+                  <h2 className="sr-only">Description</h2>
+                  <div className="prose max-w-none">
+                    <h4>Description</h4>
+                    <p>{taskData.description}</p>
                   </div>
                 </div>
               </div>
-              <section
-                aria-labelledby="activity-title"
-                className="mt-8 xl:mt-10"
-              >
-                <div>
-                  <div className="divide-y divide-gray-200">
-                    <div className="pt-6">
-                      {/* Activity feed*/}
-                      <div className="flow-root"></div>
-                      <div className="mt-6">
-                        <div className="flex space-x-3">
-                          <div className="min-w-0 flex-1">
-                            <form action="#">
-                              <div className="mt-6 flex items-center justify-end space-x-4">
-                                <button
-                                  type="button"
-                                  className="inline-flex justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2"
-                                  onClick={onButtonEditClick}
-                                >
-                                  <PencilIcon
-                                    className="-ml-1 mr-2 h-5 w-5 text-blue-500"
-                                    aria-hidden="true"
-                                  />
-                                  <span>Edit issue</span>
-                                </button>
-                              </div>
-                            </form>
-                          </div>
+            </div>
+            <section aria-labelledby="activity-title" className="mt-8 xl:mt-10">
+              <div>
+                <div className="divide-y divide-gray-200">
+                  <div className="pt-6">
+                    {/* Activity feed*/}
+                    <div className="flow-root"></div>
+                    <div className="mt-6">
+                      <div className="flex space-x-3">
+                        <div className="min-w-0 flex-1">
+                          <form action="#">
+                            <div className="mt-6 flex items-center justify-end space-x-4">
+                              <button
+                                type="button"
+                                className="inline-flex justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2"
+                                onClick={onButtonEditClick}
+                              >
+                                <PencilIcon
+                                  className="-ml-1 mr-2 h-5 w-5 text-blue-500"
+                                  aria-hidden="true"
+                                />
+                                <span>Edit task</span>
+                              </button>
+                            </div>
+                          </form>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </section>
-            </div>
-            <aside className="hidden xl:block xl:pl-8">
-              <h2 className="sr-only">Details</h2>
-              <div className="space-y-5">
-                {taskStatus()}
-                <div className="flex items-center space-x-2">
-                  <CalendarIcon
-                    className="h-5 w-5 text-gray-400"
-                    aria-hidden="true"
-                  />
-                  <span className="text-sm font-medium text-gray-900">
-                    Created on <time>{taskData.dateOfCreation}</time>
-                  </span>
-                </div>
               </div>
-              <div className="mt-6 space-y-8 border-t border-gray-200 py-6">
-                <div>
-                  <h2 className="text-sm font-medium text-gray-500">
-                    Assignees
-                  </h2>
-                  <div className="mx-auto max-w-md sm:max-w-3xl">
-                      <ul role="list" className="mt-3 space-y-3">
-                        {taskData.members.map((person) => (
-                            <li key={person.id}>
-                              <AssigneeItem person={person} />
-                            </li>
-                        ))}
-                      </ul>
-                  </div>
-                </div>
-              </div>
-            </aside>
+            </section>
           </div>
+          <aside className="hidden xl:block xl:pl-8">
+            <h2 className="sr-only">Details</h2>
+            <div className="space-y-5">
+              {taskStatus()}
+              <div className="flex items-center space-x-2">
+                <CalendarIcon
+                  className="h-5 w-5 text-gray-400"
+                  aria-hidden="true"
+                />
+                <span className="text-sm font-medium text-gray-900">
+                  Created on <time>{taskData.dateOfCreation}</time>
+                </span>
+              </div>
+            </div>
+            <div className="mt-6 space-y-8 border-t border-gray-200 py-6">
+              <div>
+                <h2 className="text-sm font-medium text-gray-500">Assignees</h2>
+                <div className="mx-auto max-w-md sm:max-w-3xl">
+                  <ul role="list" className="mt-3 space-y-3">
+                    {taskData.members.map((person) => (
+                      <li key={person.id}>
+                        <AssigneeItem person={person} />
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </aside>
         </div>
       </main>
     </div>

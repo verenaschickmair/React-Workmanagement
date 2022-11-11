@@ -8,4 +8,5 @@ export interface TaskData {
   bgColor?: string;
   members: TeamMemberData[];
   columnId: number;
+  projectId: number;
 }
