@@ -1,31 +1,40 @@
 import { ChangeEvent, Fragment, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { selectedTeamMembersState } from "../../../global-state/selected-team-member-atom";
 import { tasksState } from "../../../global-state/tasks-atom";
-import { getCurrentDate } from "../../../interfaces/project-data";
-import { TeamMemberData } from "../../../interfaces/team-member-data";
+import { ProjectData } from "../../../interfaces/project-data";
+import { TaskData } from "../../../interfaces/task-data";
 import { CustomButton } from "../../custom-ui-elements/button/button";
 import { CustomInputField } from "../../custom-ui-elements/input-field/custom-input-field";
 import { RadioButton } from "../../custom-ui-elements/radio-button/radio-button";
 import { CustomTextAreaField } from "../../custom-ui-elements/text-area-field/custom-text-area-field";
 import { TeamMember } from "../../project/team/team-member";
 
-type AddTaskModalProps = {
+type EditTaskModalProps = {
   onSuccess: () => void;
-  teamMembers: TeamMemberData[];
-  projectId: number;
+  taskData: TaskData;
 };
 
-export const AddTaskModal = ({
-  onSuccess,
-  teamMembers,
-  projectId,
-}: AddTaskModalProps) => {
-  const [taskTitle, setTaskTitle] = useState<string>("");
-  const [taskDescription, setTaskDescription] = useState<string>("");
-  const [taskBgColor, setTaskBgColor] = useState<string>("bg-red-500");
-  const [taskMembers] = useRecoilState(selectedTeamMembersState);
+export const EditTaskModal = ({ onSuccess, taskData }: EditTaskModalProps) => {
+  const [taskTitle, setTaskTitle] = useState<string>(taskData.title);
+  const [taskDescription, setTaskDescription] = useState<string>(
+    taskData.description
+  );
+  const [taskBgColor, setTaskBgColor] = useState<string>(
+    taskData.bgColor ? taskData.bgColor : "bg-red-500"
+  );
+  const [taskMembers, setTaskMembers] = useRecoilState(
+    selectedTeamMembersState
+  );
   const [tasks, setTasks] = useRecoilState(tasksState);
+
+  const location = useLocation();
+  const project: ProjectData = location.state.project;
+
+  if (taskMembers.length === 0) {
+    setTaskMembers(taskData.members);
+  }
 
   const onInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     setTaskTitle(event.target.value);
@@ -41,28 +50,31 @@ export const AddTaskModal = ({
 
   function isValid(): boolean {
     if (!taskTitle || taskTitle.length < 3) {
-      alert("Project name empty or too short");
+      alert("Task name empty or too short");
       return false;
     }
     return true;
   }
 
-  function onButtonCreateClick() {
+  function onButtonSaveClick() {
     if (isValid()) {
       if (taskMembers && taskMembers.length) {
-        setTasks(
-          tasks.concat({
-            ...tasks,
-            id: tasks.length + 1,
-            title: taskTitle,
-            description: taskDescription,
-            dateOfCreation: getCurrentDate("."),
-            members: taskMembers,
-            bgColor: taskBgColor,
-            columnId: 0,
-            projectId: projectId,
-          })
-        );
+        const editedItems = tasks.map((task) => {
+          if (task.id === taskData.id) {
+            return {
+              id: task.id,
+              bgColor: taskBgColor,
+              title: taskTitle,
+              description: taskDescription,
+              members: taskMembers,
+              columnId: task.columnId,
+              dateOfCreation: task.dateOfCreation,
+              projectId: task.projectId,
+            };
+          }
+          return task;
+        });
+        setTasks(editedItems);
         onSuccess();
       } else {
         alert("Please select at least one team member!");
@@ -72,9 +84,7 @@ export const AddTaskModal = ({
 
   return (
     <Fragment>
-      <h1 className="mt-2 text-xl font-medium text-gray-900">
-        Create a new task
-      </h1>
+      <h1 className="mt-2 text-xl font-medium text-gray-900">Edit task</h1>
       <form className="mt-6 text-left space-y-6" action="#">
         <CustomInputField
           idTag="task-title"
@@ -101,7 +111,7 @@ export const AddTaskModal = ({
               name="bgColor"
               bgColor={"bg-red-500"}
               label="Rot"
-              defaultChecked
+              defaultChecked={taskData.bgColor === "bg-red-500"}
               onChange={(event) => onRadioChange(event)}
             />
             <RadioButton
@@ -109,6 +119,7 @@ export const AddTaskModal = ({
               name="bgColor"
               bgColor={"bg-green-500"}
               label="Grün"
+              defaultChecked={taskData.bgColor === "bg-green-500"}
               onChange={(event) => onRadioChange(event)}
             />
             <RadioButton
@@ -116,6 +127,7 @@ export const AddTaskModal = ({
               name="bgColor"
               bgColor={"bg-blue-500"}
               label="Blau"
+              defaultChecked={taskData.bgColor === "bg-blue-500"}
               onChange={(event) => onRadioChange(event)}
             />
           </div>
@@ -123,13 +135,14 @@ export const AddTaskModal = ({
 
         <TeamMember
           shouldShowAddTeamMembers={false}
-          teamMembers={teamMembers}
+          teamMembers={project.teamMembers}
+          preselectTeamMembers={taskData.members}
         />
       </form>
 
       <CustomButton
-        onClick={onButtonCreateClick}
-        buttonText="Create Task"
+        onClick={onButtonSaveClick}
+        buttonText="Save Changes"
         style={{ marginTop: "20px" }}
       />
     </Fragment>

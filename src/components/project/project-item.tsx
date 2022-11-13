@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { useRecoilState } from "recoil";
 import { projectState } from "../../global-state/project-atom";
 import { AddProject } from "./add-project/add-project";
@@ -12,24 +13,28 @@ export const ProjectItem = () => {
         Create or select a project
       </h1>
       <AddProject />
-      <div
-        className="overflow-hidden bg-white shadow sm:rounded-md"
-        style={{
-          marginTop: "20px",
-          paddingTop: "20px",
-          paddingBottom: "20px",
-          margin: "auto",
-          width: "80%",
-        }}
-      >
-        <ul role="list" className="divide-y divide-gray-200">
-          {projects.map((project) => (
-            <li key={project.id}>
-              <ProjectListItem projectData={project} tasks={[]} />
-            </li>
-          ))}
-        </ul>
-      </div>
+      {projects && projects.length ? (
+        <div
+          className="overflow-hidden bg-white shadow sm:rounded-md"
+          style={{
+            marginTop: "20px",
+            paddingTop: "20px",
+            paddingBottom: "20px",
+            margin: "auto",
+            width: "80%",
+          }}
+        >
+          <ul className="divide-y divide-gray-200">
+            {projects.map((project) => (
+              <li key={project.id}>
+                <ProjectListItem projectData={project} />
+              </li>
+            ))}
+          </ul>
+        </div>
+      ) : (
+        <Fragment />
+      )}
     </div>
   );
 };
