@@ -79,6 +79,7 @@ export const AddTaskModal = ({
         <CustomInputField
           idTag="task-title"
           type="text"
+          data-cy="input-task-title"
           onChange={onInputChange}
           value={taskTitle}
           placeholder="Enter the task name"
@@ -89,6 +90,7 @@ export const AddTaskModal = ({
             idTag="task-description"
             onChange={onInputAreaChange}
             value={taskDescription}
+            data-cy="input-task-description"
             placeholder="Enter the task description"
             className="w-1/2"
           />

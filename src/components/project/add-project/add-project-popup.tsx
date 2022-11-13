@@ -90,6 +90,7 @@ export const AddProjectModal = ({ onSuccess }: AddProjectModalProps) => {
           type="text"
           onChange={onInputChange}
           value={projectName}
+          data-cy="project-input-name"
           placeholder="Enter the project name"
         />
       </form>
@@ -98,6 +99,7 @@ export const AddProjectModal = ({ onSuccess }: AddProjectModalProps) => {
         onClick={onButtonCreateClick}
         buttonText="Create Project"
         style={{ marginTop: "20px" }}
+        data-cy="create-project-button"
       />
     </Fragment>
   );

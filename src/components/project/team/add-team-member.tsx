@@ -34,12 +34,14 @@ export const AddTeamMember = () => {
           onChange={onInputChange}
           value={inputValue}
           placeholder="Enter the member's name"
+          data-cy="team-name-input"
         />
 
         <div className="mt-3 sm:mt-0 sm:ml-4 sm:flex-shrink-0">
           <CustomButton
             onClick={onButtonClick}
             buttonText={"Add member"}
+            data-cy="create-team-member-button"
             icon={
               <PlusIcon className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
             }

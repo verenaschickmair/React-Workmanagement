@@ -38,6 +38,7 @@ export const TeamMemberItem = ({
       onClick={() => onItemClick(person)}
       type="button"
       className={classes}
+      data-cy="team-member-item-button"
     >
       <span className="flex min-w-0 flex-1 items-center space-x-3">
         <span className="block min-w-0 flex-1" style={{ marginLeft: "16px" }}>
