@@ -1,6 +1,8 @@
+import { TrashIcon } from "@heroicons/react/20/solid";
 import { CalendarIcon, UsersIcon } from "@heroicons/react/24/outline";
-import { Fragment } from "react";
 import { Link } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { projectState } from "../../global-state/project-atom";
 import { ProjectData } from "../../interfaces/project-data";
 
 type ProjectListItemProps = {
@@ -8,11 +10,20 @@ type ProjectListItemProps = {
 };
 
 export const ProjectListItem = ({ projectData }: ProjectListItemProps) => {
+  const [projects, setProjects] = useRecoilState(projectState);
+
+  function deleteProject(projectId: number): void {
+    if (window.confirm("Delete project?")) {
+      const newArr = projects.filter((p) => p.id !== projectId);
+      setProjects(newArr);
+    }
+  }
+
   return (
-    <Fragment>
+    <div className="flex">
       <Link
         to={`/projects/${projectData.id}`}
-        className="block hover:bg-gray-50"
+        className="block hover:bg-gray-50 flex-grow"
         state={{ project: projectData }}
       >
         <div className="px-4 py-4 sm:px-6">
@@ -46,6 +57,9 @@ export const ProjectListItem = ({ projectData }: ProjectListItemProps) => {
           </div>
         </div>
       </Link>
-    </Fragment>
+      <button className="w-24" onClick={() => deleteProject(projectData.id)}>
+        <TrashIcon className="ml-6 h-6 z-50 w-6 flex-shrink-0 text-red-800" />
+      </button>
+    </div>
   );
 };

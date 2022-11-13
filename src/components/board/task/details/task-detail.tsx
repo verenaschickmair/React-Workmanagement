@@ -7,11 +7,13 @@ import {
   ComputerDesktopIcon,
   HandThumbUpIcon,
   PencilIcon,
+  TrashIcon,
 } from "@heroicons/react/20/solid";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { Fragment, useState } from "react";
 import { useRecoilState } from "recoil";
 import { selectedTeamMembersState } from "../../../../global-state/selected-team-member-atom";
+import { tasksState } from "../../../../global-state/tasks-atom";
 import { TaskData } from "../../../../interfaces/task-data";
 import { AssigneeItem } from "../../../custom-ui-elements/list-items/assignee-item";
 import { Popup } from "../../../popup/popup";
@@ -28,20 +30,28 @@ export const TaskDetail = ({ taskData, onSuccess }: TaskDetailProps) => {
   const [selectedTeamMembers, setSelectedTeamMembers] = useRecoilState(
     selectedTeamMembersState
   );
+  const [tasks, setTasks] = useRecoilState(tasksState);
 
-  function onButtonEditClick() {
+  function onButtonEditClick(): void {
     setShowEditTaskView(true);
   }
 
-  function onPopupClose() {
+  function onPopupClose(): void {
     setShowEditTaskView(false);
     setSelectedTeamMembers([]);
   }
 
-  function onPopupCancel() {
+  function onPopupCancel(): void {
     setShowEditTaskView(false);
     setSelectedTeamMembers([]);
     onSuccess();
+  }
+
+  function deleteTask(taskId: number): void {
+    if (window.confirm("Delete task?")) {
+      const newArr = tasks.filter((t) => t.id !== taskId);
+      setTasks(newArr);
+    }
   }
 
   function taskStatus() {
@@ -208,7 +218,7 @@ export const TaskDetail = ({ taskData, onSuccess }: TaskDetailProps) => {
                       <div className="flex space-x-3">
                         <div className="min-w-0 flex-1">
                           <form action="#">
-                            <div className="mt-6 flex items-center justify-end space-x-4">
+                            <div className="mt-6 flex items-center space-x-4">
                               <button
                                 type="button"
                                 className="inline-flex justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2"
@@ -219,6 +229,13 @@ export const TaskDetail = ({ taskData, onSuccess }: TaskDetailProps) => {
                                   aria-hidden="true"
                                 />
                                 <span>Edit task</span>
+                              </button>
+                              <button
+                                className="inline-flex justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2"
+                                onClick={() => deleteTask(taskData.id)}
+                              >
+                                <TrashIcon className="-ml-1 mr-2 h-5 w-5 text-red-800" />
+                                <span>Delete task</span>
                               </button>
                             </div>
                           </form>
