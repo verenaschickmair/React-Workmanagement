@@ -3,10 +3,10 @@ import { useState } from "react";
 import { useRecoilState } from "recoil";
 import { projectState } from "../../../global-state/project-atom";
 import { selectedTeamMembersState } from "../../../global-state/selected-team-member-atom";
-import { CustomButton } from "../../custom-ui-elements/button/button";
+import { CustomButton } from "../../custom-ui-elements/custom-button/custom-button";
 import { Popup } from "../../popup/popup";
-import { AddProjectModal } from "./add-project-popup";
-import { EmptyProject } from "./empty-project";
+import { AddProjectPopup } from "./add-project-popup/add-project-popup";
+import { EmptyProject } from "./empty-project/empty-project";
 
 export const AddProject = () => {
   const [projects] = useRecoilState(projectState);
@@ -33,7 +33,7 @@ export const AddProject = () => {
           icon={<PlusIcon className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />}
         />
         <Popup trigger={showAddProjectView} onCloseClick={onPopupClose}>
-          <AddProjectModal onSuccess={onPopupClose} />
+          <AddProjectPopup onSuccess={onPopupClose} />
         </Popup>
       </div>
     </div>

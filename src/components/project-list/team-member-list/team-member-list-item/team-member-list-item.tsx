@@ -3,17 +3,17 @@ import { PlusIcon } from "@heroicons/react/24/outline";
 import classNames from "classnames";
 import { useState } from "react";
 import { useRecoilState } from "recoil";
-import { selectedTeamMembersState } from "../../../global-state/selected-team-member-atom";
-import { TeamMemberData } from "../../../interfaces/team-member-data";
+import { selectedTeamMembersState } from "../../../../global-state/selected-team-member-atom";
+import { TeamMemberData } from "../../../../interfaces/team-member-data";
 
-type TeamMemberItemProps = {
+type TeamMemberListItemProps = {
   person: TeamMemberData;
   isSelected?: boolean;
 };
-export const TeamMemberItem = ({
+export const TeamMemberListItem = ({
   person,
   isSelected = false,
-}: TeamMemberItemProps) => {
+}: TeamMemberListItemProps) => {
   const [selectedState, setSelectedState] = useState(isSelected);
   const [selectedTeamMembers, setSelectedTeamMembers] = useRecoilState(
     selectedTeamMembersState

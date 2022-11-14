@@ -1,19 +1,20 @@
 import { Fragment } from "react";
 import { TeamMemberData } from "../../../interfaces/team-member-data";
-import { AddTeamMember } from "./add-team-member";
-import { EmptyTeamMembers } from "./empty-team-members";
-import { TeamMemberItem } from "./team-member-list-item";
 
-type TeamMemberComponentProps = {
+import { EmptyTeamMembers } from "./empty-team-member/empty-team-members";
+import { TeamMemberListItem } from "./team-member-list-item/team-member-list-item";
+import {AddTeamMember} from "./add-team-member/add-team-member";
+
+type TeamMemberListProps = {
   shouldShowAddTeamMembers?: boolean;
   teamMembers: TeamMemberData[];
   preselectTeamMembers?: TeamMemberData[];
 };
-export const TeamMember = ({
+export const TeamMemberList = ({
   shouldShowAddTeamMembers = true,
   teamMembers,
   preselectTeamMembers,
-}: TeamMemberComponentProps) => {
+}: TeamMemberListProps) => {
   return (
     <Fragment>
       <div className="mx-auto max-w-md sm:max-w-3xl">
@@ -32,7 +33,7 @@ export const TeamMember = ({
           >
             {teamMembers.map((person) => (
               <li key={person.id}>
-                <TeamMemberItem person={person}  isSelected={preselectTeamMembers?.some(member => member.id === person.id)}/>
+                <TeamMemberListItem person={person}  isSelected={preselectTeamMembers?.some(member => member.id === person.id)}/>
               </li>
             ))}
           </ul>

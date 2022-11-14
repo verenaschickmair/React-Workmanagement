@@ -1,10 +1,10 @@
 import { Fragment, PropsWithChildren } from "react"
 
-type CustomInputFieldProps = {
+type InputFieldProps = {
     idTag:string
 } & React.InputHTMLAttributes<HTMLInputElement>
 
-export const CustomInputField = ({idTag, ...props}:PropsWithChildren<CustomInputFieldProps>) =>{
+export const InputField = ({idTag, ...props}:PropsWithChildren<InputFieldProps>) =>{
     return(
         <Fragment>
             <div className="relative rounded-md shadow-sm sm:min-w-0 sm:flex-1">

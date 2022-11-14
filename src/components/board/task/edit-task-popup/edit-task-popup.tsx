@@ -1,15 +1,15 @@
 import { ChangeEvent, Fragment, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import { selectedTeamMembersState } from "../../../global-state/selected-team-member-atom";
-import { tasksState } from "../../../global-state/tasks-atom";
-import { ProjectData } from "../../../interfaces/project-data";
-import { TaskData } from "../../../interfaces/task-data";
-import { CustomButton } from "../../custom-ui-elements/button/button";
-import { CustomInputField } from "../../custom-ui-elements/input-field/custom-input-field";
-import { RadioButton } from "../../custom-ui-elements/radio-button/radio-button";
-import { CustomTextAreaField } from "../../custom-ui-elements/text-area-field/custom-text-area-field";
-import { TeamMember } from "../../project/team/team-member";
+import { selectedTeamMembersState } from "../../../../global-state/selected-team-member-atom";
+import { tasksState } from "../../../../global-state/tasks-atom";
+import { ProjectData } from "../../../../interfaces/project-data";
+import { TaskData } from "../../../../interfaces/task-data";
+import { CustomButton } from "../../../custom-ui-elements/custom-button/custom-button";
+import { InputField } from "../../../custom-ui-elements/input-field/input-field";
+import { RadioButton } from "../../../custom-ui-elements/radio-button/radio-button";
+import { TextAreaField } from "../../../custom-ui-elements/text-area-field/text-area-field";
+import { TeamMemberList } from "../../../project-list/team-member-list/team-member-list";
 
 type EditTaskModalProps = {
   onSuccess: () => void;
@@ -77,7 +77,7 @@ export const EditTaskModal = ({ onSuccess, taskData }: EditTaskModalProps) => {
         setTasks(editedItems);
         onSuccess();
       } else {
-        alert("Please select at least one team member!");
+        alert("Please select at least one team-member-list member!");
       }
     }
   }
@@ -85,8 +85,8 @@ export const EditTaskModal = ({ onSuccess, taskData }: EditTaskModalProps) => {
   return (
     <Fragment>
       <h1 className="mt-2 text-xl font-medium text-gray-900">Edit task</h1>
-      <form className="mt-6 text-left space-y-6" action="#">
-        <CustomInputField
+      <form className="mt-6 text-left space-y-6" action="src/components/board/task/edit-task-popup/edit-task-popup#">
+        <InputField
           idTag="task-title"
           type="text"
           onChange={onInputChange}
@@ -95,7 +95,7 @@ export const EditTaskModal = ({ onSuccess, taskData }: EditTaskModalProps) => {
         />
 
         <div className="flex">
-          <CustomTextAreaField
+          <TextAreaField
             idTag="task-description"
             onChange={onInputAreaChange}
             value={taskDescription}
@@ -133,7 +133,7 @@ export const EditTaskModal = ({ onSuccess, taskData }: EditTaskModalProps) => {
           </div>
         </div>
 
-        <TeamMember
+        <TeamMemberList
           shouldShowAddTeamMembers={false}
           teamMembers={project.teamMembers}
           preselectTeamMembers={taskData.members}

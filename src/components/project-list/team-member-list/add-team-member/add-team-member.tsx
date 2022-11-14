@@ -1,9 +1,9 @@
 import { PlusIcon } from "@heroicons/react/24/outline";
 import { ChangeEvent, Fragment, useState } from "react";
 import { useRecoilState } from "recoil";
-import { teamMembersState } from "../../../global-state/team-member-atom";
-import { CustomButton } from "../../custom-ui-elements/button/button";
-import { CustomInputField } from "../../custom-ui-elements/input-field/custom-input-field";
+import { teamMembersState } from "../../../../global-state/team-member-atom";
+import { CustomButton } from "../../../custom-ui-elements/custom-button/custom-button";
+import { InputField } from "../../../custom-ui-elements/input-field/input-field";
 
 export const AddTeamMember = () => {
   const [teamMembers, setTeamMembers] = useRecoilState(teamMembersState);
@@ -28,7 +28,7 @@ export const AddTeamMember = () => {
   return (
     <Fragment>
       <form className="mt-6 sm:flex sm:items-center" action="#">
-        <CustomInputField
+        <InputField
           idTag="name"
           type="text"
           onChange={onInputChange}

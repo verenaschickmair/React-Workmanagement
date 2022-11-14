@@ -1,14 +1,14 @@
 import { Fragment, useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
-import { tasksState } from "../../global-state/tasks-atom";
-import { TaskData } from "../../interfaces/task-data";
-import "./drag-and-drop.css";
+import { tasksState } from "../../../global-state/tasks-atom";
+import { TaskData } from "../../../interfaces/task-data";
+import "./board-drag-and-drop.css";
 
 type DragAndDropProps = {
   taskData: TaskData;
 };
 
-export const DragAndDrop = ({ taskData }: DragAndDropProps) => {
+export const BoardDragAndDrop = ({ taskData }: DragAndDropProps) => {
   const [tasks, setTasks] = useRecoilState(tasksState);
   const dropBoxes = document.querySelectorAll(".dropBox");
   const [dragItems, setDragItems] = useState(

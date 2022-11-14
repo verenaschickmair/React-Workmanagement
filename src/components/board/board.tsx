@@ -1,9 +1,9 @@
 import { BackspaceIcon } from "@heroicons/react/20/solid";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ProjectData } from "../../interfaces/project-data";
-import { CustomButton } from "../custom-ui-elements/button/button";
+import { CustomButton } from "../custom-ui-elements/custom-button/custom-button";
 import { BoardColumn } from "./board-column/board-column";
-import { AddTask } from "./task/add-task";
+import { AddTask } from "./task/add-task/add-task";
 
 export default function Board() {
   const location = useLocation();

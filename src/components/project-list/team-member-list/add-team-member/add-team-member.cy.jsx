@@ -17,7 +17,7 @@ describe('<AddTeamMember>', () => {
               <AddTeamMember/>
           </RecoilRoot>
         )
-        cy.get('[data-cy=team-name-input]').type("TeamMember1")
-        cy.get('[data-cy=team-name-input]').should('have.value','TeamMember1')
+        cy.get('[data-cy=team-member-list-name-input]').type("TeamMember1")
+        cy.get('[data-cy=team-member-list-name-input]').should('have.value','TeamMember1')
       })
   })

@@ -1,14 +1,14 @@
 import React from "react";
 import { Fragment, PropsWithChildren } from "react";
 
-type CustomInputAreaFieldProps = {
+type InputAreaFieldProps = {
   idTag: string;
 } & React.InputHTMLAttributes<HTMLTextAreaElement>;
 
-export const CustomTextAreaField = ({
+export const TextAreaField = ({
   idTag,
   ...props
-}: PropsWithChildren<CustomInputAreaFieldProps>) => {
+}: PropsWithChildren<InputAreaFieldProps>) => {
   return (
     <Fragment>
       <div className="relative rounded-md shadow-sm sm:min-w-0 sm:flex-1">

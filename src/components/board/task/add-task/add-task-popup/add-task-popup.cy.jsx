@@ -1,11 +1,11 @@
 import { RecoilRoot } from "recoil"
-import { AddTaskModal } from "./add-task-popup"
+import { AddTaskPopup } from "./add-task-popup"
 
 describe('<AddTaskModal>', () => {
     it('mounts', () => {
       cy.mount(
         <RecoilRoot>
-           <AddTaskModal onSuccess={{}} projectId={1} teamMembers={[{
+           <AddTaskPopup onSuccess={{}} projectId={1} teamMembers={[{
             id: 1,
             name:"Test"
            }]}/>
@@ -17,7 +17,7 @@ describe('<AddTaskModal>', () => {
     it('task title', () => {
         cy.mount(
             <RecoilRoot>
-            <AddTaskModal onSuccess={{}} projectId={1} teamMembers={[{
+            <AddTaskPopup onSuccess={{}} projectId={1} teamMembers={[{
             id: 1,
             name:"Test"
            }]}/>
@@ -34,7 +34,7 @@ describe('<AddTaskModal>', () => {
     it('task description', () => {
         cy.mount(
             <RecoilRoot>
-            <AddTaskModal onSuccess={{}} projectId={1} teamMembers={[{
+            <AddTaskPopup onSuccess={{}} projectId={1} teamMembers={[{
             id: 1,
             name:"Test"
            }]}/>

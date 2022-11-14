@@ -1,15 +1,16 @@
 import { ChangeEvent, Fragment, useState } from "react";
 import { useRecoilState } from "recoil";
-import { projectState } from "../../../global-state/project-atom";
-import { selectedTeamMembersState } from "../../../global-state/selected-team-member-atom";
-import { teamMembersState } from "../../../global-state/team-member-atom";
-import { BoardColumnData } from "../../../interfaces/board-column-data";
-import { getCurrentDate } from "../../../interfaces/project-data";
-import { CustomButton } from "../../custom-ui-elements/button/button";
-import { CustomInputField } from "../../custom-ui-elements/input-field/custom-input-field";
-import { TeamMember } from "../team/team-member";
+import { projectState } from "../../../../global-state/project-atom";
+import { selectedTeamMembersState } from "../../../../global-state/selected-team-member-atom";
+import { teamMembersState } from "../../../../global-state/team-member-atom";
+import { BoardColumnData } from "../../../../interfaces/board-column-data";
+import { getCurrentDate } from "../../../../interfaces/project-data";
+import { CustomButton } from "../../../custom-ui-elements/custom-button/custom-button";
+import { InputField } from "../../../custom-ui-elements/input-field/input-field";
+import { TeamMemberList } from "../../team-member-list/team-member-list";
 
-type AddProjectModalProps = {
+
+type AddProjectPopupProps = {
   onSuccess: () => void;
 };
 
@@ -41,7 +42,7 @@ const boardColumns: BoardColumnData[] = [
   },
 ];
 
-export const AddProjectModal = ({ onSuccess }: AddProjectModalProps) => {
+export const AddProjectPopup = ({ onSuccess }: AddProjectPopupProps) => {
   const [projectName, setProjectName] = useState<string>("");
   const [projects, setProjects] = useRecoilState(projectState);
   const [teamMembers] = useRecoilState(teamMembersState);
@@ -58,7 +59,7 @@ export const AddProjectModal = ({ onSuccess }: AddProjectModalProps) => {
       return false;
     }
     if (selectedTeamMembers.length == 0) {
-      alert("At least one team member needs to be selected");
+      alert("At least one team-member-list member needs to be selected");
       return false;
     }
     return true;
@@ -85,7 +86,7 @@ export const AddProjectModal = ({ onSuccess }: AddProjectModalProps) => {
         Create a new project
       </h1>
       <form className="mt-6 sm:flex sm:items-center" action="#">
-        <CustomInputField
+        <InputField
           idTag="project-name"
           type="text"
           onChange={onInputChange}
@@ -94,7 +95,7 @@ export const AddProjectModal = ({ onSuccess }: AddProjectModalProps) => {
           placeholder="Enter the project name"
         />
       </form>
-      <TeamMember shouldShowAddTeamMembers={true} teamMembers={teamMembers} />
+      <TeamMemberList shouldShowAddTeamMembers={true} teamMembers={teamMembers} />
       <CustomButton
         onClick={onButtonCreateClick}
         buttonText="Create Project"
