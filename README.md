@@ -1,6 +1,11 @@
-# Getting Started with Create React App
+# Project "Workmanagement Web-App in React"
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The goal is to build a ticket system like Asana or Jira, but in a simplified way. It should be possible to create projects. Members can then be assigned to a project and managed. Tasks can then be added to a project. A task can consist of title, description, responsible members and the date of creation. The tasks are displayed in a board, and by default they will be added in the backlog. Then the tasks can be moved from the backlog to the desired column. There should be a predefined board with predefined columns e.g. Backlog, Todo, In Progress, Review, Done.
+
+## Team Members
+* Kräutl Philip
+* Mayr Simon
+* Schickmair Verena
 
 ## Available Scripts
 
