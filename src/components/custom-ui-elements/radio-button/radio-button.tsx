@@ -1,17 +1,12 @@
 import { Fragment, PropsWithChildren } from "react";
 
-type CustomInputProps = {
+type RadioButtonProps = {
   idTag: string;
   bgColor: string;
   label: string;
 } & React.InputHTMLAttributes<HTMLInputElement>;
 
-export const RadioButton = ({
-  idTag,
-  bgColor,
-  label,
-  ...props
-}: PropsWithChildren<CustomInputProps>) => {
+export const RadioButton = ({idTag, bgColor, label, ...props}: PropsWithChildren<RadioButtonProps>) => {
   return (
     <Fragment>
       <div className="flex items-center">

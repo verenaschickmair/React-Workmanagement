@@ -17,7 +17,7 @@ import { tasksState } from "../../../../global-state/tasks-atom";
 import { TaskData } from "../../../../interfaces/task-data";
 import { AssigneeItem } from "../../../custom-ui-elements/assignee-item/assignee-item";
 import { Popup } from "../../../popup/popup";
-import { EditTaskModal } from "../edit-task-popup/edit-task-popup";
+import { EditTaskPopup } from "../edit-task-popup/edit-task-popup";
 
 type TaskDetailProps = {
   taskData: TaskData;
@@ -115,7 +115,7 @@ export const TaskDetail = ({ taskData, onSuccess }: TaskDetailProps) => {
     <div className="flex min-h-full">
       <div className="text-center">
         <Popup trigger={showEditTaskView} onCloseClick={onPopupCancel}>
-          <EditTaskModal onSuccess={onPopupClose} taskData={taskData} />
+          <EditTaskPopup onSuccess={onPopupClose} taskData={taskData} />
         </Popup>
       </div>
       <Transition.Root show={sidebarOpen} as={Fragment}>

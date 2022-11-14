@@ -11,12 +11,12 @@ import { RadioButton } from "../../../custom-ui-elements/radio-button/radio-butt
 import { TextAreaField } from "../../../custom-ui-elements/text-area-field/text-area-field";
 import { TeamMemberList } from "../../../project-list/team-member-list/team-member-list";
 
-type EditTaskModalProps = {
+type EditTaskPopupProps = {
   onSuccess: () => void;
   taskData: TaskData;
 };
 
-export const EditTaskModal = ({ onSuccess, taskData }: EditTaskModalProps) => {
+export const EditTaskPopup = ({ onSuccess, taskData }: EditTaskPopupProps) => {
   const [taskTitle, setTaskTitle] = useState<string>(taskData.title);
   const [taskDescription, setTaskDescription] = useState<string>(
     taskData.description

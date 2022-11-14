@@ -9,11 +9,11 @@ function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
 
-type TaskItemProps = {
+type TaskProps = {
   taskData: TaskData;
 };
 
-export const Task = ({ taskData }: TaskItemProps) => {
+export const Task = ({ taskData }: TaskProps) => {
   const [showTaskDetailView, setShowTaskDetail] = useState(false);
 
   function onButtonClick() {
