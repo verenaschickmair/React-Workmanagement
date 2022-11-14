@@ -1,26 +1,26 @@
 import { ChangeEvent, Fragment, useState } from "react";
 import { useRecoilState } from "recoil";
-import { selectedTeamMembersState } from "../../../global-state/selected-team-member-atom";
-import { tasksState } from "../../../global-state/tasks-atom";
-import { getCurrentDate } from "../../../interfaces/project-data";
-import { TeamMemberData } from "../../../interfaces/team-member-data";
-import { CustomButton } from "../../custom-ui-elements/button/button";
-import { CustomInputField } from "../../custom-ui-elements/input-field/custom-input-field";
-import { RadioButton } from "../../custom-ui-elements/radio-button/radio-button";
-import { CustomTextAreaField } from "../../custom-ui-elements/text-area-field/custom-text-area-field";
-import { TeamMember } from "../../project/team/team-member";
+import { selectedTeamMembersState } from "../../../../../global-state/selected-team-member-atom";
+import { tasksState } from "../../../../../global-state/tasks-atom";
+import { getCurrentDate } from "../../../../../interfaces/project-data";
+import { TeamMemberData } from "../../../../../interfaces/team-member-data";
+import { CustomButton } from "../../../../custom-ui-elements/custom-button/custom-button";
+import { InputField } from "../../../../custom-ui-elements/input-field/input-field";
+import { RadioButton } from "../../../../custom-ui-elements/radio-button/radio-button";
+import { TextAreaField } from "../../../../custom-ui-elements/text-area-field/text-area-field";
+import { TeamMemberList } from "../../../../project-list/team-member-list/team-member-list";
 
-type AddTaskModalProps = {
+type AddTaskPopupProps = {
   onSuccess: () => void;
   teamMembers: TeamMemberData[];
   projectId: number;
 };
 
-export const AddTaskModal = ({
+export const AddTaskPopup = ({
   onSuccess,
   teamMembers,
   projectId,
-}: AddTaskModalProps) => {
+}: AddTaskPopupProps) => {
   const [taskTitle, setTaskTitle] = useState<string>("");
   const [taskDescription, setTaskDescription] = useState<string>("");
   const [taskBgColor, setTaskBgColor] = useState<string>("bg-red-500");
@@ -65,7 +65,7 @@ export const AddTaskModal = ({
         );
         onSuccess();
       } else {
-        alert("Please select at least one team member!");
+        alert("Please select at least one team-member-list member!");
       }
     }
   }
@@ -75,8 +75,8 @@ export const AddTaskModal = ({
       <h1 className="mt-2 text-xl font-medium text-gray-900">
         Create a new task
       </h1>
-      <form className="mt-6 text-left space-y-6" action="#">
-        <CustomInputField
+      <form className="mt-6 text-left space-y-6" action="src/components/board/task/add-task/add-task-popup/add-task-popup#">
+        <InputField
           idTag="task-title"
           type="text"
           data-cy="input-task-title"
@@ -86,7 +86,7 @@ export const AddTaskModal = ({
         />
 
         <div className="flex">
-          <CustomTextAreaField
+          <TextAreaField
             idTag="task-description"
             onChange={onInputAreaChange}
             value={taskDescription}
@@ -123,7 +123,7 @@ export const AddTaskModal = ({
           </div>
         </div>
 
-        <TeamMember
+        <TeamMemberList
           shouldShowAddTeamMembers={false}
           teamMembers={teamMembers}
         />

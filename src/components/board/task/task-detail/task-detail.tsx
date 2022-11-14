@@ -15,9 +15,9 @@ import { useRecoilState } from "recoil";
 import { selectedTeamMembersState } from "../../../../global-state/selected-team-member-atom";
 import { tasksState } from "../../../../global-state/tasks-atom";
 import { TaskData } from "../../../../interfaces/task-data";
-import { AssigneeItem } from "../../../custom-ui-elements/list-items/assignee-item";
+import { AssigneeItem } from "../../../custom-ui-elements/assignee-item/assignee-item";
 import { Popup } from "../../../popup/popup";
-import { EditTaskModal } from "../edit-task-popup";
+import { EditTaskModal } from "../edit-task-popup/edit-task-popup";
 
 type TaskDetailProps = {
   taskData: TaskData;

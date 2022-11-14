@@ -1,7 +1,7 @@
 import { useRecoilState } from "recoil";
 import { tasksState } from "../../../global-state/tasks-atom";
 import { TaskData } from "../../../interfaces/task-data";
-import { TaskItem } from "../task/task-item";
+import { Task } from "../task/task";
 
 type BoardColumnProps = {
   name: string;
@@ -35,7 +35,7 @@ export const BoardColumn = ({
       >
         <ul className="grid grid-cols-1">
           {renderColumnTasks(tasks, columnId, projectId).map((task) => (
-            <TaskItem taskData={task} key={task.id} />
+            <Task taskData={task} key={task.id} />
           ))}
         </ul>
       </div>

@@ -1,11 +1,11 @@
 import { RecoilRoot } from "recoil"
-import { TeamMemberItem } from "./team-member-list-item"
+import { TeamMemberListItem } from "./team-member-list-item"
 
-describe('<TeamMemberItem>', () => {
+describe('<TeamMemberListItem>', () => {
     it('mounts', () => {
       cy.mount(
         <RecoilRoot>
-           <TeamMemberItem person={{
+           <TeamMemberListItem person={{
                 id: 1,
                 name:"TestPerson"
               }}/>
@@ -14,10 +14,10 @@ describe('<TeamMemberItem>', () => {
 
     })
 
-    it('teammember', () => {
+    it('TeamMemberList', () => {
         cy.mount(
           <RecoilRoot>
-              <TeamMemberItem person={{
+              <TeamMemberListItem person={{
                 id: 1,
                 name:"TestPerson"
               }}/>

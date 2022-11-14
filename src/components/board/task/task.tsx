@@ -2,8 +2,8 @@ import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
 import { useState } from "react";
 import { TaskData } from "../../../interfaces/task-data";
 import { Popup } from "../../popup/popup";
-import { DragAndDrop } from "../drag-and-drop";
-import { TaskDetail } from "./details/task-detail";
+import { BoardDragAndDrop } from "../board-drag-and-drop/board-drag-and-drop";
+import { TaskDetail } from "./task-detail/task-detail";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
@@ -13,7 +13,7 @@ type TaskItemProps = {
   taskData: TaskData;
 };
 
-export const TaskItem = ({ taskData }: TaskItemProps) => {
+export const Task = ({ taskData }: TaskItemProps) => {
   const [showTaskDetailView, setShowTaskDetail] = useState(false);
 
   function onButtonClick() {
@@ -55,7 +55,7 @@ export const TaskItem = ({ taskData }: TaskItemProps) => {
           </button>
         </div>
       </div>
-      <DragAndDrop taskData={taskData} />
+      <BoardDragAndDrop taskData={taskData} />
     </div>
   );
 };

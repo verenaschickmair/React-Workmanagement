@@ -8,7 +8,7 @@ describe('<AddProjectPopup>', () => {
             <AddProjectModal/>
         </RecoilRoot>
       )
-      cy.get('[data-cy=project-input-name]').should('have.value','')
+      cy.get('[data-cy=project-list-input-name]').should('have.value','')
     })
 
     it('input change', () => {
@@ -18,8 +18,8 @@ describe('<AddProjectPopup>', () => {
               <AddProjectModal onSuccess={onSuccess}/>
           </RecoilRoot>
         )
-        cy.get('[data-cy=project-input-name]').type("Te")
-        cy.get('[data-cy=create-project-button]').click().then(() => {
+        cy.get('[data-cy=project-list-input-name]').type("Te")
+        cy.get('[data-cy=create-project-list-custom-button]').click().then(() => {
             expect(onSuccess).to.not.be.called;
           });
       })

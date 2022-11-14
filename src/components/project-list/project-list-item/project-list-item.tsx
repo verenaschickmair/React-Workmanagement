@@ -2,8 +2,8 @@ import { TrashIcon } from "@heroicons/react/20/solid";
 import { CalendarIcon, UsersIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import { projectState } from "../../global-state/project-atom";
-import { ProjectData } from "../../interfaces/project-data";
+import { projectState } from "../../../global-state/project-atom";
+import { ProjectData } from "../../../interfaces/project-data";
 
 type ProjectListItemProps = {
   projectData: ProjectData;
@@ -13,7 +13,7 @@ export const ProjectListItem = ({ projectData }: ProjectListItemProps) => {
   const [projects, setProjects] = useRecoilState(projectState);
 
   function deleteProject(projectId: number): void {
-    if (window.confirm("Delete project?")) {
+    if (window.confirm("Delete project-list?")) {
       const newArr = projects.filter((p) => p.id !== projectId);
       setProjects(newArr);
     }

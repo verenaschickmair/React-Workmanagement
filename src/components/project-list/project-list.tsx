@@ -2,9 +2,9 @@ import { Fragment } from "react";
 import { useRecoilState } from "recoil";
 import { projectState } from "../../global-state/project-atom";
 import { AddProject } from "./add-project/add-project";
-import { ProjectListItem } from "./project-list-item";
+import { ProjectListItem } from "./project-list-item/project-list-item";
 
-export const ProjectItem = () => {
+export const ProjectList = () => {
   const [projects] = useRecoilState(projectState);
 
   return (

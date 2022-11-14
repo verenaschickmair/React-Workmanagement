@@ -1,11 +1,11 @@
 import { PlusIcon } from "@heroicons/react/20/solid";
 import { useState } from "react";
 import { useRecoilState } from "recoil";
-import { selectedTeamMembersState } from "../../../global-state/selected-team-member-atom";
-import { TeamMemberData } from "../../../interfaces/team-member-data";
-import { CustomButton } from "../../custom-ui-elements/button/button";
-import { Popup } from "../../popup/popup";
-import { AddTaskModal } from "./add-task-popup";
+import { selectedTeamMembersState } from "../../../../global-state/selected-team-member-atom";
+import { TeamMemberData } from "../../../../interfaces/team-member-data";
+import { CustomButton } from "../../../custom-ui-elements/custom-button/custom-button";
+import { Popup } from "../../../popup/popup";
+import { AddTaskPopup } from "./add-task-popup/add-task-popup";
 
 type AddTaskProps = {
   teamMembers: TeamMemberData[];
@@ -35,7 +35,7 @@ export const AddTask = ({ teamMembers, projectId }: AddTaskProps) => {
           icon={<PlusIcon className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />}
         />
         <Popup trigger={showAddTaskView} onCloseClick={onPopupClose}>
-          <AddTaskModal
+          <AddTaskPopup
             onSuccess={onPopupClose}
             teamMembers={teamMembers}
             projectId={projectId}
