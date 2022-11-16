@@ -1,4 +1,4 @@
-export interface TeamMemberData{
-    id:number
-    name:string
+export interface TeamMemberData {
+  id: number;
+  name: string;
 }

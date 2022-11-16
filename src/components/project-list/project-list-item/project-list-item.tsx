@@ -13,7 +13,7 @@ export const ProjectListItem = ({ projectData }: ProjectListItemProps) => {
   const [projects, setProjects] = useRecoilState(projectState);
 
   function deleteProject(projectId: number): void {
-    if (window.confirm("Delete project-list?")) {
+    if (window.confirm("Delete project?")) {
       const newArr = projects.filter((p) => p.id !== projectId);
       setProjects(newArr);
     }

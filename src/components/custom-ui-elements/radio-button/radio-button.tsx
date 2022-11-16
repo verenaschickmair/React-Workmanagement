@@ -6,7 +6,12 @@ type RadioButtonProps = {
   label: string;
 } & React.InputHTMLAttributes<HTMLInputElement>;
 
-export const RadioButton = ({idTag, bgColor, label, ...props}: PropsWithChildren<RadioButtonProps>) => {
+export const RadioButton = ({
+  idTag,
+  bgColor,
+  label,
+  ...props
+}: PropsWithChildren<RadioButtonProps>) => {
   return (
     <Fragment>
       <div className="flex items-center">

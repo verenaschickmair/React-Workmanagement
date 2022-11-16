@@ -65,7 +65,7 @@ export const AddTaskPopup = ({
         );
         onSuccess();
       } else {
-        alert("Please select at least one team-member-list member!");
+        alert("Please select at least one team member!");
       }
     }
   }
@@ -75,7 +75,10 @@ export const AddTaskPopup = ({
       <h1 className="mt-2 text-xl font-medium text-gray-900">
         Create a new task
       </h1>
-      <form className="mt-6 text-left space-y-6" action="src/components/board/task/add-task/add-task-popup/add-task-popup#">
+      <form
+        className="mt-6 text-left space-y-6"
+        action="src/components/board/task/add-task/add-task-popup/add-task-popup#"
+      >
         <InputField
           idTag="task-title"
           type="text"

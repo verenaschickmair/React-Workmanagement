@@ -9,7 +9,6 @@ import { CustomButton } from "../../../custom-ui-elements/custom-button/custom-b
 import { InputField } from "../../../custom-ui-elements/input-field/input-field";
 import { TeamMemberList } from "../../team-member-list/team-member-list";
 
-
 type AddProjectPopupProps = {
   onSuccess: () => void;
 };
@@ -46,9 +45,7 @@ export const AddProjectPopup = ({ onSuccess }: AddProjectPopupProps) => {
   const [projectName, setProjectName] = useState<string>("");
   const [projects, setProjects] = useRecoilState(projectState);
   const [teamMembers] = useRecoilState(teamMembersState);
-  const [selectedTeamMembers, setSelectedTeamMembers] = useRecoilState(
-    selectedTeamMembersState
-  );
+  const [selectedTeamMembers] = useRecoilState(selectedTeamMembersState);
   const onInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     setProjectName(event.target.value);
   };
@@ -58,8 +55,8 @@ export const AddProjectPopup = ({ onSuccess }: AddProjectPopupProps) => {
       alert("Project name empty or too short");
       return false;
     }
-    if (selectedTeamMembers.length == 0) {
-      alert("At least one team-member-list member needs to be selected");
+    if (selectedTeamMembers.length === 0) {
+      alert("At least one team member needs to be selected");
       return false;
     }
     return true;
@@ -95,7 +92,10 @@ export const AddProjectPopup = ({ onSuccess }: AddProjectPopupProps) => {
           placeholder="Enter the project name"
         />
       </form>
-      <TeamMemberList shouldShowAddTeamMembers={true} teamMembers={teamMembers} />
+      <TeamMemberList
+        shouldShowAddTeamMembers={true}
+        teamMembers={teamMembers}
+      />
       <CustomButton
         onClick={onButtonCreateClick}
         buttonText="Create Project"

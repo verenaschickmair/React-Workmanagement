@@ -265,7 +265,7 @@ export const TaskDetail = ({ taskData, onSuccess }: TaskDetailProps) => {
               <div>
                 <h2 className="text-sm font-medium text-gray-500">Assignees</h2>
                 <div className="mx-auto max-w-md sm:max-w-3xl">
-                  <ul role="list" className="mt-3 space-y-3">
+                  <ul className="mt-3 space-y-3">
                     {taskData.members.map((person) => (
                       <li key={person.id}>
                         <AssigneeItem person={person} />

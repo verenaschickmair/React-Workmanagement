@@ -1,9 +1,9 @@
 import { Fragment } from "react";
 import { TeamMemberData } from "../../../interfaces/team-member-data";
 
+import { AddTeamMember } from "./add-team-member/add-team-member";
 import { EmptyTeamMembers } from "./empty-team-member/empty-team-members";
 import { TeamMemberListItem } from "./team-member-list-item/team-member-list-item";
-import {AddTeamMember} from "./add-team-member/add-team-member";
 
 type TeamMemberListProps = {
   shouldShowAddTeamMembers?: boolean;
@@ -27,13 +27,15 @@ export const TeamMemberList = ({
           {teamMembers.length > 0 ? null : <EmptyTeamMembers />}
         </div>
         <div className="mt-10">
-          <ul
-            role="list"
-            className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2"
-          >
+          <ul className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
             {teamMembers.map((person) => (
               <li key={person.id}>
-                <TeamMemberListItem person={person}  isSelected={preselectTeamMembers?.some(member => member.id === person.id)}/>
+                <TeamMemberListItem
+                  person={person}
+                  isSelected={preselectTeamMembers?.some(
+                    (member) => member.id === person.id
+                  )}
+                />
               </li>
             ))}
           </ul>
