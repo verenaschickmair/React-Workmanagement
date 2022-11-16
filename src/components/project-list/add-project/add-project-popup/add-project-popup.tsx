@@ -82,7 +82,7 @@ export const AddProjectPopup = ({ onSuccess }: AddProjectPopupProps) => {
       <h1 className="mt-2 text-xl font-medium text-gray-900">
         Create a new project
       </h1>
-      <form className="mt-6 sm:flex sm:items-center" action="#">
+      <form className="mt-6 sm:flex sm:items-center">
         <InputField
           idTag="project-name"
           type="text"

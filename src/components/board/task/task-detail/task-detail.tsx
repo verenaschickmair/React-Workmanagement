@@ -11,6 +11,7 @@ import {
 } from "@heroicons/react/20/solid";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { Fragment, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { selectedTeamMembersState } from "../../../../global-state/selected-team-member-atom";
 import { tasksState } from "../../../../global-state/tasks-atom";
@@ -31,6 +32,7 @@ export const TaskDetail = ({ taskData, onSuccess }: TaskDetailProps) => {
     selectedTeamMembersState
   );
   const [tasks, setTasks] = useRecoilState(tasksState);
+  const navigate = useNavigate();
 
   function onButtonEditClick(): void {
     setShowEditTaskView(true);
@@ -217,28 +219,26 @@ export const TaskDetail = ({ taskData, onSuccess }: TaskDetailProps) => {
                     <div className="mt-6">
                       <div className="flex space-x-3">
                         <div className="min-w-0 flex-1">
-                          <form action="#">
-                            <div className="mt-6 flex items-center space-x-4">
-                              <button
-                                type="button"
-                                className="inline-flex justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2"
-                                onClick={onButtonEditClick}
-                              >
-                                <PencilIcon
-                                  className="-ml-1 mr-2 h-5 w-5 text-blue-500"
-                                  aria-hidden="true"
-                                />
-                                <span>Edit task</span>
-                              </button>
-                              <button
-                                className="inline-flex justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2"
-                                onClick={() => deleteTask(taskData.id)}
-                              >
-                                <TrashIcon className="-ml-1 mr-2 h-5 w-5 text-red-800" />
-                                <span>Delete task</span>
-                              </button>
-                            </div>
-                          </form>
+                          <div className="mt-6 flex items-center space-x-4">
+                            <button
+                              type="button"
+                              className="inline-flex justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2"
+                              onClick={onButtonEditClick}
+                            >
+                              <PencilIcon
+                                className="-ml-1 mr-2 h-5 w-5 text-blue-500"
+                                aria-hidden="true"
+                              />
+                              <span>Edit task</span>
+                            </button>
+                            <button
+                              className="inline-flex justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2"
+                              onClick={() => deleteTask(taskData.id)}
+                            >
+                              <TrashIcon className="-ml-1 mr-2 h-5 w-5 text-red-800" />
+                              <span>Delete task</span>
+                            </button>
+                          </div>
                         </div>
                       </div>
                     </div>

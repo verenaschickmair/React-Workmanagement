@@ -27,7 +27,7 @@ export const AddTeamMember = () => {
   };
   return (
     <Fragment>
-      <form className="mt-6 sm:flex sm:items-center" action="#">
+      <form className="mt-6 sm:flex sm:items-center">
         <InputField
           idTag="name"
           type="text"

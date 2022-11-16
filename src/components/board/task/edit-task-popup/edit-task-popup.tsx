@@ -85,10 +85,7 @@ export const EditTaskPopup = ({ onSuccess, taskData }: EditTaskPopupProps) => {
   return (
     <Fragment>
       <h1 className="mt-2 text-xl font-medium text-gray-900">Edit task</h1>
-      <form
-        className="mt-6 text-left space-y-6"
-        action="src/components/board/task/edit-task-popup/edit-task-popup#"
-      >
+      <form className="mt-6 text-left space-y-6">
         <InputField
           idTag="task-title"
           type="text"
